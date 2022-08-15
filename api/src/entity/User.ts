@@ -1,6 +1,7 @@
 import { Entity, Column, OneToMany } from 'typeorm'
-import { Address } from './Address'
+import bcrypt from 'bcrypt'
 
+import { Address } from './Address'
 import { BaseEntityCustom } from './BaseEntityCustom'
 
 @Entity()
@@ -36,16 +37,14 @@ export class User extends BaseEntityCustom {
   })
   role: string
 
-  @Column({
-    type: 'bytea',
-    nullable: false,
-  })
-  avatar: Buffer
-
   @OneToMany(() => Address, (address) => address.userId, {
     cascade: true,
     eager: true,
     onDelete: 'CASCADE',
   })
   address: Address[]
+
+  async comparePassword(password: string) {
+    return await bcrypt.compare(password, this.password)
+  }
 }

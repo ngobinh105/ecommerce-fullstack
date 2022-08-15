@@ -13,7 +13,7 @@ class CustomDataSource {
     logging: false,
     synchronize: true,
     migrations: [],
-    subscribers: [],
+    subscribers: ['./src/subscribers/*'],
   })
   constructor(
     public options: DataSourceOptions = {
@@ -27,7 +27,7 @@ class CustomDataSource {
       logging: false,
       synchronize: true,
       migrations: [],
-      subscribers: [],
+      subscribers: ['./src/subscribers/*'],
     }
   ) {
     this.AppDataSource = new DataSource(options)
