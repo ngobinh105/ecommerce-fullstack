@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "lib": ["es5", "es6", "dom"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
