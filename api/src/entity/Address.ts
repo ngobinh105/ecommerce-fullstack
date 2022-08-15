@@ -23,6 +23,6 @@ export class Address extends BaseEntityCustom {
   @Column()
   postal_code: string
 
-  @ManyToOne(() => User, (user) => user.address, { onDelete: 'SET NULL' })
-  userId: User
+  @ManyToOne(() => User, (user) => user.addresses, { onDelete: 'SET NULL' })
+  user: User
 }

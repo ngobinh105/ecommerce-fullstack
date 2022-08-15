@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 import userRoute from './routers/user.route'
+import imageRoute from './routers/image.route'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -14,10 +15,13 @@ app.set('port', process.env.PORT || 3001)
 
 // Global middleware
 app.use(apiContentType)
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(express.text())
 
 // Set up routers
 app.use('/users', userRoute)
+app.use('/images', imageRoute)
 // Custom API error handler
 app.use(apiErrorHandler)
 

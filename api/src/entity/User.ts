@@ -1,8 +1,11 @@
-import { Entity, Column, OneToMany } from 'typeorm'
+import { Entity, Column, OneToMany, OneToOne, JoinTable } from 'typeorm'
 import bcrypt from 'bcrypt'
+import { IsEmail, Length, MinLength } from 'class-validator'
 
 import { Address } from './Address'
 import { BaseEntityCustom } from './BaseEntityCustom'
+import { Cart } from './Cart'
+import { Review } from './Review'
 
 @Entity()
 export class User extends BaseEntityCustom {
@@ -15,19 +18,23 @@ export class User extends BaseEntityCustom {
   @Column({
     type: 'varchar',
     unique: true,
-    length: 25,
   })
+  @Length(8, 20)
   username: string
 
   @Column({
     type: 'varchar',
     unique: true,
   })
+  @IsEmail()
   email: string
 
   @Column({
     select: false,
     type: 'varchar',
+  })
+  @MinLength(10, {
+    message: 'Your password is too short',
   })
   password: string
 
@@ -37,12 +44,25 @@ export class User extends BaseEntityCustom {
   })
   role: string
 
-  @OneToMany(() => Address, (address) => address.userId, {
+  @Column({
+    nullable: false,
+    type: 'varchar',
+  })
+  avatar: string
+
+  @OneToMany(() => Address, (address) => address.user, {
     cascade: true,
     eager: true,
     onDelete: 'CASCADE',
   })
-  address: Address[]
+  @JoinTable()
+  addresses: Address[]
+
+  @OneToOne(() => Cart, (cart) => cart.user)
+  cart: Cart
+
+  @OneToMany(() => Review, (review) => review.user)
+  reviews: Review[]
 
   async comparePassword(password: string) {
     return await bcrypt.compare(password, this.password)
