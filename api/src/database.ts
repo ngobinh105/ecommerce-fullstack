@@ -9,7 +9,7 @@ class CustomDataSource {
     username: 'postgres',
     password: 'admin',
     database: 'postgres',
-    entities: ['/src/entity/*.ts'],
+    entities: ['./src/entity/*'],
     logging: false,
     synchronize: true,
     migrations: [],

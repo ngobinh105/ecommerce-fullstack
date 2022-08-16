@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import userRoute from './routers/user.route'
 import imageRoute from './routers/image.route'
+import productRoute from './routers/product.route'
+import categoryRoute from './routers/category.route'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -20,6 +22,8 @@ app.use(express.text())
 // Set up routers
 app.use('/users', userRoute)
 app.use('/images', imageRoute)
+app.use('/products', productRoute)
+app.use('/categories', categoryRoute)
 // Custom API error handler
 app.use(apiErrorHandler)
 

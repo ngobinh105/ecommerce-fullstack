@@ -14,19 +14,18 @@ export class Product extends BaseEntityCustom {
   @Column()
   description: string
 
-  @Column()
+  @Column({
+    default: 0,
+  })
   discount: number
 
   @Column()
-  quantity: number
+  stock: number
 
-  @Column('simple-array')
+  @Column({ array: true, type: 'varchar' })
   images: string[]
 
-  @Column()
-  avatar: string
-
-  @ManyToOne(() => Category, {
+  @ManyToOne(() => Category, (category) => category.products, {
     cascade: true,
     eager: true,
     onDelete: 'NO ACTION',

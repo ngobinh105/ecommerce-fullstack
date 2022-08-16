@@ -7,7 +7,7 @@ const userRoute = Router()
 
 userRoute.get('', userController.getAll)
 userRoute.get('/:userId', userController.getOneById)
-userRoute.post('', fileUpload, userController.createOne)
+userRoute.post('', fileUpload.single('avatar'), userController.createOne)
 userRoute.put('/:userId', userController.updateOne)
 userRoute.delete('/:userId', userController.deleteOne)
 
