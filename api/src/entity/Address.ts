@@ -5,8 +5,8 @@ import { User } from './User'
 
 @Entity()
 export class Address extends BaseEntityCustom {
-  @Column()
-  name: string
+  @Column({ enum: ['home', 'business', 'shipping', 'billing'] })
+  addressType: string
 
   @Column()
   city: string
@@ -21,7 +21,7 @@ export class Address extends BaseEntityCustom {
   street: string
 
   @Column()
-  postal_code: string
+  postalCode: string
 
   @ManyToOne(() => User, (user) => user.addresses, { onDelete: 'SET NULL' })
   user: User

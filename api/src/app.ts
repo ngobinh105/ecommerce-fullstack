@@ -3,7 +3,6 @@ import express from 'express'
 import dotenv from 'dotenv'
 
 import apiErrorHandler from './middlewares/apiErrorHandler'
-import apiContentType from './middlewares/apiContentType'
 import userRoute from './routers/user.route'
 import imageRoute from './routers/image.route'
 
@@ -14,7 +13,6 @@ const app = express()
 app.set('port', process.env.PORT || 3001)
 
 // Global middleware
-app.use(apiContentType)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.text())

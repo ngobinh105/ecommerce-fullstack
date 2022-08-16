@@ -7,6 +7,7 @@ import database from '../database'
 import userService from '../services/user.service'
 import { BadRequestError, NotFoundError } from '../helpers/apiError'
 import { User } from '../entity/User'
+import { Address } from '../entity/Address'
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -29,7 +30,26 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         const image = await imageRepository.save({ imageData: data })
         avatar = `http://localhost:5000/images/${image.id}`
       }
-      const { firstName, lastName, email, username, password } = req.body
+      const {
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        addressType,
+        city,
+        country,
+        state,
+        postalCode,
+        street,
+      } = req.body
+      const userAddress = new Address()
+      userAddress.addressType = addressType
+      userAddress.city = city
+      userAddress.country = country
+      userAddress.state = state
+      userAddress.postalCode = postalCode
+      userAddress.street = street
 
       const newUser = new User()
       newUser.firstName = firstName
@@ -37,10 +57,11 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
       newUser.email = email
       newUser.username = username
       newUser.password = password
-
+      newUser.avatar = avatar
+      newUser.addresses = [userAddress]
       const error = await validate(newUser)
       if (error.length > 0) {
-        throw new BadRequestError()
+        throw new BadRequestError('Validation Failed')
       } else {
         const createdUser = await userService.createOne(newUser)
         return res.status(201).json(createdUser)
