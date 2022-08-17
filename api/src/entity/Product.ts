@@ -5,7 +5,10 @@ import { Review } from './Review'
 
 @Entity()
 export class Product extends BaseEntityCustom {
-  @Column()
+  @Column({
+    unique: true,
+    type: 'varchar',
+  })
   title: string
 
   @Column()

@@ -3,9 +3,10 @@ import fs from 'fs'
 
 import productService from '../services/product.service'
 import database from '../database'
-import { BadRequestError, NotFoundError } from '../helpers/apiError'
+import { NotFoundError } from '../helpers/apiError'
 import { Image } from '../entity/Image'
 import { Product } from '../entity/Product'
+import { Category } from '../entity/Category'
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -35,14 +36,14 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         })
       )
 
-      const { title, price, description, stock } = req.body
-
+      const { title, price, description, stock, categoryId } = req.body
       const newProduct = new Product()
       newProduct.title = title
       newProduct.price = price
       newProduct.description = description
       newProduct.stock = stock
       newProduct.images = savedImages
+      newProduct.category = categoryId
       const createdProduct = await productService.createOne(newProduct)
       return res.status(201).json(createdProduct)
     } else {

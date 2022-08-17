@@ -8,7 +8,7 @@ export class Category extends BaseEntityCustom {
   name: string
 
   @Column()
-  image: number
+  image: string
 
   @OneToMany(() => Product, (product) => product.category, {
     onDelete: 'CASCADE',

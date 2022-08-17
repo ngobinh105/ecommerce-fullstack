@@ -17,8 +17,26 @@ const getAll = async (req: Request, res: Response, next: NextFunction) => {
 }
 const createOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const createdCategory = await categoryService.createOne(req.body)
-    return res.status(201).json(createdCategory)
+    const imageRepository = database.AppDataSource.getRepository(Image)
+    if (req.file?.path) {
+      const data = fs.readFileSync(req.file?.path)
+      const checkImage = await imageRepository.findOneBy({ imageData: data })
+      let image
+      if (checkImage) {
+        image = `http://localhost:5000/images/${checkImage.id}`
+      } else {
+        const savedImage = await imageRepository.save({ imageData: data })
+        image = `http://localhost:5000/images/${savedImage.id}`
+      }
+
+      const newCategory = new Category()
+      newCategory.image = image
+      newCategory.name = req.body.name
+      const createdRepository = await categoryService.createOne(newCategory)
+      return res.status(201).json(createdRepository)
+    } else {
+      throw new NotFoundError('File cannot be empty')
+    }
   } catch (e) {
     return next(e)
   }
