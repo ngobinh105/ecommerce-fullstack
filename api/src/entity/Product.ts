@@ -36,6 +36,11 @@ export class Product extends BaseEntityCustom {
   @JoinTable()
   category: Category
 
-  @OneToMany(() => Review, (review) => review.product)
+  @OneToMany(() => Review, (review) => review.product, {
+    cascade: true,
+    eager: true,
+    onDelete: 'NO ACTION',
+  })
+  @JoinTable()
   reviews: Review[]
 }

@@ -5,9 +5,14 @@ import { Product } from './Product'
 
 @Entity()
 export class Review extends BaseEntityCustom {
-  @Column()
+  @Column({
+    type: 'varchar',
+  })
   review: string
-
+  @Column({
+    enum: [1, 2, 3, 4, 5],
+  })
+  rate: number
   @ManyToOne(() => User, (user) => user.reviews)
   user: User
   @ManyToOne(() => Product, (product) => product.reviews)

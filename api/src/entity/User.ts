@@ -61,7 +61,12 @@ export class User extends BaseEntityCustom {
   @OneToOne(() => Cart, (cart) => cart.user)
   cart: Cart
 
-  @OneToMany(() => Review, (review) => review.user)
+  @OneToMany(() => Review, (review) => review.user, {
+    eager: true,
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinTable()
   reviews: Review[]
 
   async comparePassword(password: string) {
