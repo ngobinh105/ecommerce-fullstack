@@ -43,7 +43,9 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const deletedCategory = await categoryService.deleteOne(req.params.id)
+    const deletedCategory = await categoryService.deleteOne(
+      req.params.categoryId
+    )
     return res.json(deletedCategory)
   } catch (e) {
     return next(e)
@@ -52,7 +54,7 @@ const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
 const updateOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const updatedCategory = await categoryService.updateOne(
-      req.params.id,
+      req.params.categoryId,
       req.body
     )
     return res.json(updatedCategory)
@@ -62,7 +64,9 @@ const updateOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const getOneById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const foundCategory = await categoryService.getOneById(req.params.id)
+    const foundCategory = await categoryService.getOneById(
+      req.params.categoryId
+    )
     return res.json(foundCategory)
   } catch (e) {
     return next(e)

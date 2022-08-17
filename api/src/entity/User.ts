@@ -4,8 +4,8 @@ import { IsEmail, Length, MinLength } from 'class-validator'
 
 import { Address } from './Address'
 import { BaseEntityCustom } from './BaseEntityCustom'
-import { Cart } from './Cart'
 import { Review } from './Review'
+import { CartItem } from './CartItem'
 
 @Entity()
 export class User extends BaseEntityCustom {
@@ -58,8 +58,13 @@ export class User extends BaseEntityCustom {
   @JoinTable()
   addresses: Address[]
 
-  @OneToOne(() => Cart, (cart) => cart.user)
-  cart: Cart
+  @OneToMany(() => CartItem, (cartItem) => cartItem.user, {
+    eager: true,
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinTable()
+  cartItems: CartItem[]
 
   @OneToMany(() => Review, (review) => review.user, {
     eager: true,

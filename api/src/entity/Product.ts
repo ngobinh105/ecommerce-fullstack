@@ -1,5 +1,6 @@
 import { Column, Entity, JoinTable, ManyToOne, OneToMany } from 'typeorm'
 import { BaseEntityCustom } from './BaseEntityCustom'
+import { CartItem } from './CartItem'
 import { Category } from './Category'
 import { Review } from './Review'
 
@@ -39,8 +40,11 @@ export class Product extends BaseEntityCustom {
   @OneToMany(() => Review, (review) => review.product, {
     cascade: true,
     eager: true,
-    onDelete: 'NO ACTION',
+    onDelete: 'CASCADE',
   })
   @JoinTable()
   reviews: Review[]
+
+  @OneToMany(() => CartItem, (cartItems) => cartItems.product)
+  cartItems: CartItem[]
 }

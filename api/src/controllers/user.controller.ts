@@ -75,7 +75,7 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const deletedUser = await userService.deleteOne(req.params.id)
+    const deletedUser = await userService.deleteOne(req.params.userId)
     return res.json(deletedUser)
   } catch (e) {
     return next(e)
@@ -83,7 +83,7 @@ const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const updateOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const updatedUser = await userService.updateOne(req.params.id, req.body)
+    const updatedUser = await userService.updateOne(req.params.userId, req.body)
     return res.json(updatedUser)
   } catch (e) {
     return next(e)
@@ -91,7 +91,7 @@ const updateOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const getOneById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const foundUser = await userService.getOneById(req.params.id)
+    const foundUser = await userService.getOneById(req.params.userId)
     return res.json(foundUser)
   } catch (e) {
     return next(e)
