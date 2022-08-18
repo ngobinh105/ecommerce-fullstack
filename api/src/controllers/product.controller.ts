@@ -37,14 +37,18 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
       )
 
       const { title, price, description, stock, categoryId } = req.body
-      const newProduct = new Product()
-      newProduct.title = title
-      newProduct.price = price
-      newProduct.description = description
-      newProduct.stock = stock
-      newProduct.images = savedImages
-      newProduct.category = categoryId
-      const createdProduct = await productService.createOne(newProduct)
+      const newProduct = {
+        title,
+        price,
+        description,
+        stock,
+        category: categoryId,
+        images: savedImages,
+      }
+      const product =
+        database.AppDataSource.getRepository(Product).create(newProduct)
+
+      const createdProduct = await productService.createOne(product)
       return res.status(201).json(createdProduct)
     } else {
       throw new NotFoundError('Files cannot be empty')
