@@ -36,17 +36,19 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         })
       )
 
-      const { title, price, description, stock, categoryId } = req.body
-      const newProduct = {
+      const { title, price, description, stock, categoryName } = req.body
+
+      const category = await database.AppDataSource.getRepository(
+        Category
+      ).findOneBy({ name: categoryName })
+      const product = database.AppDataSource.getRepository(Product).create({
         title,
         price,
         description,
         stock,
-        category: categoryId,
+        category,
         images: savedImages,
-      }
-      const product =
-        database.AppDataSource.getRepository(Product).create(newProduct)
+      })
 
       const createdProduct = await productService.createOne(product)
       return res.status(201).json(createdProduct)
@@ -78,7 +80,7 @@ const updateOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const getOneById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const foundProduct = await productService.getOneById(req.params.id)
+    const foundProduct = await productService.getOneById(req.params.productId)
     return res.json(foundProduct)
   } catch (e) {
     return next(e)

@@ -35,7 +35,7 @@ export class Product extends BaseEntityCustom {
     onDelete: 'NO ACTION',
   })
   @JoinTable()
-  category: Category
+  category: Category | null
 
   @OneToMany(() => Review, (review) => review.product, {
     cascade: true,

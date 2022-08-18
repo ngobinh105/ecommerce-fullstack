@@ -4,16 +4,25 @@ import { NotFoundError } from '../helpers/apiError'
 
 const reviewRepository = database.AppDataSource.getRepository(Review)
 
-const getAll = async () => {
-  return await reviewRepository.find()
+const getAllByUser = async (userId: string) => {
+  return await reviewRepository
+    .createQueryBuilder('review')
+    .leftJoinAndSelect('review.product', 'product')
+    .where('review.user.id = :userId', { userId })
+    .getMany()
 }
 
 const createOne = async (review: Review) => {
   return await reviewRepository.save(review)
 }
 
-const getOneById = async (id: string) => {
-  return await reviewRepository.findOneBy({ id: id })
+const getAllByProduct = async (productId: string) => {
+  return await reviewRepository
+    .createQueryBuilder('review')
+    .leftJoinAndSelect('review.user', 'user')
+    .where('review.product.id = :productId', { productId })
+    .select(['review', 'user'])
+    .getMany()
 }
 
 const updateOne = async (id: string, update: Partial<Review>) => {
@@ -35,9 +44,9 @@ const deleteOne = async (id: string) => {
 }
 
 export default {
-  getAll,
+  getAllByUser,
   updateOne,
   deleteOne,
-  getOneById,
+  getAllByProduct,
   createOne,
 }

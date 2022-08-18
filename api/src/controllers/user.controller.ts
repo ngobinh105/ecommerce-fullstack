@@ -5,7 +5,7 @@ import { validate } from 'class-validator'
 import { Image } from '../entity/Image'
 import database from '../database'
 import userService from '../services/user.service'
-import { BadRequestError, NotFoundError } from '../helpers/apiError'
+import { NotFoundError } from '../helpers/apiError'
 import { User } from '../entity/User'
 import { Address } from '../entity/Address'
 
@@ -43,29 +43,28 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         postalCode,
         street,
       } = req.body
-      const userAddress = new Address()
-      userAddress.addressType = addressType
-      userAddress.city = city
-      userAddress.country = country
-      userAddress.state = state
-      userAddress.postalCode = postalCode
-      userAddress.street = street
 
-      const newUser = new User()
-      newUser.firstName = firstName
-      newUser.lastName = lastName
-      newUser.email = email
-      newUser.username = username
-      newUser.password = password
-      newUser.avatar = avatar
-      newUser.addresses = [userAddress]
-      const error = await validate(newUser)
-      if (error.length > 0) {
-        throw new BadRequestError('Validation Failed')
-      } else {
-        const createdUser = await userService.createOne(newUser)
-        return res.status(201).json(createdUser)
-      }
+      const userAddress = database.AppDataSource.getRepository(Address).create({
+        addressType,
+        city,
+        country,
+        state,
+        postalCode,
+        street,
+      })
+
+      const newUser = database.AppDataSource.getRepository(User).create({
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        avatar,
+        addresses: [userAddress],
+      })
+
+      const createdUser = await userService.createOne(newUser)
+      return res.status(201).json(createdUser)
     } else {
       throw new NotFoundError()
     }

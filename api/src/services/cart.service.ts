@@ -4,11 +4,11 @@ import { NotFoundError } from '../helpers/apiError'
 
 const cartItemRepository = database.AppDataSource.getRepository(CartItem)
 
-const getAll = async () => {
+const getAllByUser = async (userId: string) => {
   return await cartItemRepository
     .createQueryBuilder('cart_item')
     .leftJoinAndSelect('cart_item.product', 'product')
-    .leftJoinAndSelect('cart_item.user', 'user')
+    .where('cart_item.user = :userId', { userId })
     .getMany()
 }
 
@@ -35,7 +35,7 @@ const deleteOne = async (id: string) => {
 }
 
 export default {
-  getAll,
+  getAllByUser,
   updateOne,
   deleteOne,
   createOne,

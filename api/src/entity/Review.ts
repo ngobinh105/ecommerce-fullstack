@@ -17,6 +17,7 @@ export class Review extends BaseEntityCustom {
     onDelete: 'CASCADE',
   })
   user: User
+
   @ManyToOne(() => Product, (product) => product.reviews, {
     onDelete: 'CASCADE',
   })

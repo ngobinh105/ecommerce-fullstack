@@ -2,10 +2,19 @@ import { Request, Response, NextFunction } from 'express'
 
 import reviewService from '../services/review.service'
 import { Review } from '../entity/Review'
+import database from '../database'
+import { User } from '../entity/User'
+import { Product } from '../entity/Product'
+import { BadRequestError } from '../helpers/apiError'
 
-const getAll = async (req: Request, res: Response, next: NextFunction) => {
+const getAllByUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const reviews = await reviewService.getAll()
+    const { userId } = req.params
+    const reviews = await reviewService.getAllByUser(userId)
     return res.json(reviews)
   } catch (e) {
     return next(e)
@@ -14,13 +23,39 @@ const getAll = async (req: Request, res: Response, next: NextFunction) => {
 const createOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { review, rate, userId, productId } = req.body
-    const newReview = new Review()
-    newReview.review = review
-    newReview.rate = rate
-    newReview.user = userId
-    newReview.product = productId
-    const createdReview = await reviewService.createOne(newReview)
-    return res.status(201).json(createdReview)
+    const user = await database.AppDataSource.getRepository(User).findOneBy({
+      id: userId,
+    })
+    const product = await database.AppDataSource.getRepository(
+      Product
+    ).findOneBy({
+      id: productId,
+    })
+    const checkUserReview = await database.AppDataSource.getRepository(
+      Review
+    ).findOne({
+      relations: {
+        user: true,
+      },
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+    })
+    if (user && product && !checkUserReview) {
+      const addedReview = database.AppDataSource.getRepository(Review).create({
+        review,
+        rate,
+        user,
+        product,
+      })
+
+      const createdReview = await reviewService.createOne(addedReview)
+      return res.status(201).json(createdReview)
+    } else {
+      throw new BadRequestError('User has already reviewed this product')
+    }
   } catch (e) {
     return next(e)
   }
@@ -44,19 +79,24 @@ const updateOne = async (req: Request, res: Response, next: NextFunction) => {
     return next(e)
   }
 }
-const getOneById = async (req: Request, res: Response, next: NextFunction) => {
+const getAllByProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const foundReview = await reviewService.getOneById(req.params.reviewId)
-    return res.json(foundReview)
+    const { productId } = req.params
+    const reviews = await reviewService.getAllByProduct(productId)
+    return res.json(reviews)
   } catch (e) {
     return next(e)
   }
 }
 
 export default {
-  getAll,
+  getAllByUser,
   createOne,
   deleteOne,
   updateOne,
-  getOneById,
+  getAllByProduct,
 }

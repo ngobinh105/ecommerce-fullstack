@@ -28,10 +28,9 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         const savedImage = await imageRepository.save({ imageData: data })
         image = `http://localhost:5000/images/${savedImage.id}`
       }
-
-      const newCategory = new Category()
-      newCategory.image = image
-      newCategory.name = req.body.name
+      const newCategory = database.AppDataSource.getRepository(Category).create(
+        { image, name: req.body.name }
+      )
       const createdRepository = await categoryService.createOne(newCategory)
       return res.status(201).json(createdRepository)
     } else {
