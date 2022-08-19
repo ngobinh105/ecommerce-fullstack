@@ -1,6 +1,6 @@
 import { Entity, Column, OneToMany, OneToOne, JoinTable } from 'typeorm'
 import bcrypt from 'bcrypt'
-import { IsEmail, Length, MinLength } from 'class-validator'
+import { IsEmail, MinLength } from 'class-validator'
 
 import { Address } from './Address'
 import { BaseEntityCustom } from './BaseEntityCustom'
@@ -19,18 +19,10 @@ export class User extends BaseEntityCustom {
     type: 'varchar',
     unique: true,
   })
-  @Length(8, 20)
-  username: string
-
-  @Column({
-    type: 'varchar',
-    unique: true,
-  })
   @IsEmail()
   email: string
 
   @Column({
-    select: false,
     type: 'varchar',
   })
   @MinLength(10, {

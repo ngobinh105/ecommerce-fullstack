@@ -7,6 +7,7 @@ import userRoute from './routers/user.route'
 import imageRoute from './routers/image.route'
 import productRoute from './routers/product.route'
 import categoryRoute from './routers/category.route'
+import authRoute from './routers/auth.route'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -24,6 +25,7 @@ app.use('/users', userRoute)
 app.use('/images', imageRoute)
 app.use('/products', productRoute)
 app.use('/categories', categoryRoute)
+app.use('/auth', authRoute)
 // Custom API error handler
 app.use(apiErrorHandler)
 

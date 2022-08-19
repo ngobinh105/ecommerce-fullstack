@@ -11,7 +11,7 @@ export class CartItem extends BaseEntityCustom {
 
   @ManyToOne(() => Product, (product) => product.cartItems, {
     cascade: true,
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
   })
   @JoinColumn()
   product: Product

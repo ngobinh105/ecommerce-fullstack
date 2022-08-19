@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import fs from 'fs'
-import { validate } from 'class-validator'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
 import { Image } from '../entity/Image'
 import database from '../database'
@@ -9,6 +10,7 @@ import { NotFoundError } from '../helpers/apiError'
 import { User } from '../entity/User'
 import { Address } from '../entity/Address'
 
+dotenv.config({ path: '.env' })
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await userService.getAll()
@@ -34,7 +36,6 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         firstName,
         lastName,
         email,
-        username,
         password,
         addressType,
         city,
@@ -57,7 +58,6 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         firstName,
         lastName,
         email,
-        username,
         password,
         avatar,
         addresses: [userAddress],
@@ -97,10 +97,26 @@ const getOneById = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const userLogin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = req.user
+    const userJSON = JSON.stringify(user)
+    const token = jwt.sign(
+      user ? { userJSON } : '',
+      process.env.JWT_SECRET ? process.env.JWT_SECRET : '',
+      { expiresIn: '1d' }
+    )
+    res.json(token)
+  } catch (e) {
+    return next(e)
+  }
+}
+
 export default {
   getAll,
   createOne,
   deleteOne,
   updateOne,
   getOneById,
+  userLogin,
 }
