@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
-import bcrypt from 'bcrypt'
-
 import { User } from '../entity/User'
 import database from '../database'
-import { UnauthorizedError, NotFoundError } from '../helpers/apiError'
+import { NotFoundError, UnauthorizedError } from '../helpers/apiError'
 
 const verifyLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -22,7 +20,7 @@ const verifyLogin = async (req: Request, res: Response, next: NextFunction) => {
         throw new UnauthorizedError('Your password is incorrect')
       }
     } else {
-      throw new NotFoundError('User not found')
+      throw new NotFoundError('User Not Found')
     }
   } catch (e) {
     return next(e)

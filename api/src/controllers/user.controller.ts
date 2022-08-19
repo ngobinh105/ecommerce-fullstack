@@ -1,14 +1,15 @@
 import { NextFunction, Request, Response } from 'express'
 import fs from 'fs'
-import jwt from 'jsonwebtoken'
+import jwt, { Jwt, JwtPayload } from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
 import { Image } from '../entity/Image'
 import database from '../database'
 import userService from '../services/user.service'
-import { NotFoundError } from '../helpers/apiError'
+import { NotFoundError, UnauthorizedError } from '../helpers/apiError'
 import { User } from '../entity/User'
 import { Address } from '../entity/Address'
+import { UserDecodedPayload } from '../types/token'
 
 dotenv.config({ path: '.env' })
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
@@ -112,6 +113,27 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { authorization } = req.headers
+    const token = authorization?.split(' ')[1]
+    if (token) {
+      try {
+        const decoded = jwt.verify(
+          token,
+          process.env.JWT_SECRET ? process.env.JWT_SECRET : ''
+        ) as UserDecodedPayload
+        res.json(JSON.parse(decoded.userJSON))
+      } catch (e) {
+        throw new UnauthorizedError('Invalid token')
+      }
+    } else {
+      throw new NotFoundError('Token is missing')
+    }
+  } catch (e) {
+    return next(e)
+  }
+}
 export default {
   getAll,
   createOne,
@@ -119,4 +141,5 @@ export default {
   updateOne,
   getOneById,
   userLogin,
+  verifyUser,
 }
