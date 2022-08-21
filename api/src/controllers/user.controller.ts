@@ -134,6 +134,7 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
     return next(e)
   }
 }
+
 export default {
   getAll,
   createOne,

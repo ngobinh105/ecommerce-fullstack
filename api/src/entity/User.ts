@@ -32,7 +32,7 @@ export class User extends BaseEntityCustom {
 
   @Column({
     enum: ['buyer', 'seller', 'admin'],
-    default: 'user',
+    default: 'buyer',
   })
   role: string
 
