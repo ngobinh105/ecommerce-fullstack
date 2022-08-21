@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import fs from 'fs'
-import jwt, { Jwt, JwtPayload } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
 import { Image } from '../entity/Image'
@@ -12,6 +12,7 @@ import { Address } from '../entity/Address'
 import { UserDecodedPayload } from '../types/token'
 
 dotenv.config({ path: '.env' })
+
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await userService.getAll()

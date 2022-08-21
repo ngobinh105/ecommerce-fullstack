@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { DataSource, DataSourceOptions } from 'typeorm'
 
-class CustomDataSource {
+export class CustomDataSource {
   public AppDataSource: DataSource = new DataSource({
     type: 'postgres',
     host: 'localhost',
@@ -36,7 +36,7 @@ class CustomDataSource {
     return this.AppDataSource.initialize()
   }
   close() {
-    return this.AppDataSource.destroy()
+    return this.AppDataSource.dropDatabase()
   }
 }
 

@@ -34,8 +34,12 @@ authRoute.get(
 )
 
 authRoute.get('/logout', (req: Request, res: Response, next: NextFunction) => {
-  req.logout()
-  res.redirect(process.env.CLIENT_URL ? process.env.CLIENT_URL : '')
+  req.logout((err) => {
+    if (err) {
+      return next(err)
+    }
+    res.redirect(process.env.CLIENT_URL ? process.env.CLIENT_URL : '')
+  })
 })
 
 export default authRoute
