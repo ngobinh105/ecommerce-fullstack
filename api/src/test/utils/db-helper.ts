@@ -6,7 +6,7 @@ const testdb = new CustomDataSource({
   port: 5433,
   username: 'postgres',
   password: 'admin',
-  database: 'postgres',
+  database: 'testing',
   entities: ['./src/entity/*'],
   logging: false,
   synchronize: true,

@@ -1,20 +1,22 @@
-import testdb from './utils/db-helper'
+import database from '../database'
 import app from '../app'
 import request from 'supertest'
 
-beforeAll(() => {
-  testdb
-    .init()
-    .then(() => {
-      console.log('database is successfully initialized')
-      app.listen(app.get('port'), () => {
-        console.log('server is listening at port', app.get('port'))
-      })
-    })
-    .catch((e) => console.log(e))
-})
-afterAll(async () => {
-  await testdb.close()
+beforeAll(async () => {
+  database.connect({
+    type: 'postgres',
+    host: 'localhost',
+    port: 5433,
+    username: 'postgres',
+    password: 'admin',
+    database: 'testing',
+    entities: ['./src/entity/*'],
+    logging: false,
+    synchronize: true,
+    migrations: [],
+    subscribers: ['./src/subscribers/*'],
+  })
+  await database.init()
 })
 
 describe('test user controller', () => {
@@ -33,7 +35,8 @@ describe('test user controller', () => {
       .field('state', 'uusimaa')
       .field('postalCode', '00970')
       .field('street', 'Aleksanderinkatu 1B')
-      .attach('avatar', 'src/test/images/test-image.png')
+      .attach('avatar', `${__dirname}/images/test-image.png`)
+    console.log(response.body)
     expect(response.status).toBe(201)
   })
 })

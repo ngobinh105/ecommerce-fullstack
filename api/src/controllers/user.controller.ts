@@ -46,7 +46,6 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         postalCode,
         street,
       } = req.body
-
       const userAddress = database.AppDataSource.getRepository(Address).create({
         addressType,
         city,
@@ -55,7 +54,6 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         postalCode,
         street,
       })
-
       const newUser = database.AppDataSource.getRepository(User).create({
         firstName,
         lastName,
@@ -64,7 +62,6 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         avatar,
         addresses: [userAddress],
       })
-
       const createdUser = await userService.createOne(newUser)
       return res.status(201).json(createdUser)
     } else {
