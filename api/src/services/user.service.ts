@@ -2,21 +2,18 @@ import { User } from '../entity/User'
 import database from '../database'
 import { NotFoundError } from '../helpers/apiError'
 
-const userRepository = database.AppDataSource.getRepository(User)
-
 const getAll = async () => {
+  const userRepository = database.AppDataSource.getRepository(User)
   return await userRepository.find()
 }
 
 const createOne = async (user: User) => {
+  const userRepository = database.AppDataSource.getRepository(User)
   return await userRepository.save(user)
 }
 
-const getOneById = async (id: string) => {
-  return await userRepository.findOneBy({ id: id })
-}
-
 const updateOne = async (id: string, update: Partial<User>) => {
+  const userRepository = database.AppDataSource.getRepository(User)
   const foundUser = await userRepository.findOneBy({ id: id })
   if (foundUser) {
     return await userRepository.update({ id: id }, update)
@@ -26,6 +23,7 @@ const updateOne = async (id: string, update: Partial<User>) => {
 }
 
 const deleteOne = async (id: string) => {
+  const userRepository = database.AppDataSource.getRepository(User)
   const foundUser = await userRepository.findOneBy({ id: id })
   if (foundUser) {
     return await userRepository.delete({ id: id })
@@ -38,6 +36,5 @@ export default {
   getAll,
   updateOne,
   deleteOne,
-  getOneById,
   createOne,
 }

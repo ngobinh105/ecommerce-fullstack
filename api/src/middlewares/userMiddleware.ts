@@ -1,7 +1,13 @@
 import { NextFunction, Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
 import { User } from '../entity/User'
 import database from '../database'
 import { NotFoundError, UnauthorizedError } from '../helpers/apiError'
+import { UserDecodedPayload } from 'token'
+
+dotenv.config({ path: '.env' })
 
 const verifyLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -27,6 +33,31 @@ const verifyLogin = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const verifyAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { authorization } = req.headers
+    const token = authorization?.split(' ')[1]
+    if (token) {
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET ? process.env.JWT_SECRET : ''
+      ) as UserDecodedPayload
+      const user = JSON.parse(decoded.userJSON)
+      console.log(user.role)
+      if (user.role === 'admin') {
+        return next()
+      } else {
+        throw new UnauthorizedError('You are not allowed to view this')
+      }
+    } else {
+      throw new NotFoundError('Token is missing')
+    }
+  } catch (e) {
+    return next(e)
+  }
+}
+
 export default {
   verifyLogin,
+  verifyAdmin,
 }

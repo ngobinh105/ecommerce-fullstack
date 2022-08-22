@@ -1,9 +1,11 @@
 import database from '../database'
 import app from '../app'
 import request from 'supertest'
+import { User } from '../entity/User'
+import { user1, user2, user3 } from './fixtures/user'
 
 beforeAll(async () => {
-  database.connect({
+  await database.connect({
     type: 'postgres',
     host: 'localhost',
     port: 5433,
@@ -15,8 +17,11 @@ beforeAll(async () => {
     synchronize: true,
     migrations: [],
     subscribers: ['./src/subscribers/*'],
+    dropSchema: true,
   })
-  await database.init()
+  database.AppDataSource.getRepository(User).save(user1)
+  database.AppDataSource.getRepository(User).save(user2)
+  database.AppDataSource.getRepository(User).save(user3)
 })
 
 describe('test user controller', () => {
@@ -36,7 +41,6 @@ describe('test user controller', () => {
       .field('postalCode', '00970')
       .field('street', 'Aleksanderinkatu 1B')
       .attach('avatar', `${__dirname}/images/test-image.png`)
-    console.log(response.body)
     expect(response.status).toBe(201)
   })
 })

@@ -11,7 +11,7 @@ const authRoute = Router()
 
 authRoute.post('/login', userMiddleware.verifyLogin, userController.userLogin)
 authRoute.get('/login', userController.userLogin)
-authRoute.post('/profile', userController.verifyUser)
+authRoute.get('/profile', userController.verifyUser)
 authRoute.get(
   '/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })

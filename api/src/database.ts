@@ -20,8 +20,9 @@ class CustomDataSource {
   close() {
     return this.AppDataSource.dropDatabase()
   }
-  connect(options: DataSourceOptions) {
+  async connect(options: DataSourceOptions) {
     this.AppDataSource = new DataSource(options)
+    return this.AppDataSource.initialize()
   }
 }
 

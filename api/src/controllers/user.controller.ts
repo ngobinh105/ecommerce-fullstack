@@ -87,14 +87,6 @@ const updateOne = async (req: Request, res: Response, next: NextFunction) => {
     return next(e)
   }
 }
-const getOneById = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const foundUser = await userService.getOneById(req.params.userId)
-    return res.json(foundUser)
-  } catch (e) {
-    return next(e)
-  }
-}
 
 const userLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -138,7 +130,6 @@ export default {
   createOne,
   deleteOne,
   updateOne,
-  getOneById,
   userLogin,
   verifyUser,
 }

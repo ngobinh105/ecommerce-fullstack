@@ -4,11 +4,11 @@ import fileUpload from '../middlewares/multerService'
 import userController from '../controllers/user.controller'
 import cartController from '../controllers/cart.controller'
 import reviewController from '../controllers/review.controller'
+import userMiddleware from '../middlewares/userMiddleware'
 
 const userRoute = Router()
 // user route
-userRoute.get('', userController.getAll)
-userRoute.get('/:userId', userController.getOneById)
+userRoute.get('', userMiddleware.verifyAdmin, userController.getAll)
 userRoute.post('', fileUpload.single('avatar'), userController.createOne)
 userRoute.put('/:userId', userController.updateOne)
 userRoute.delete('/:userId', userController.deleteOne)
