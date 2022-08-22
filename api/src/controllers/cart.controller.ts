@@ -46,18 +46,18 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const deletedCartItem = await cartService.deleteOne(req.params.cartItemId)
-    return res.json(deletedCartItem)
+    await cartService.deleteOne(req.params.cartItemId)
+    return res.status(204)
   } catch (e) {
     return next(e)
   }
 }
 const updateOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const updatedCartItem = await cartService.updateOne(
-      req.params.cartItemId,
-      req.body
-    )
+    await cartService.updateOne(req.params.cartItemId, req.body)
+    const updatedCartItem = await database.AppDataSource.getRepository(
+      CartItem
+    ).findOneBy({ id: req.params.cartItemId })
     return res.json(updatedCartItem)
   } catch (e) {
     return next(e)

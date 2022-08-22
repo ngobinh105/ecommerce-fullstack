@@ -61,18 +61,18 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const deletedProduct = await productService.deleteOne(req.params.productId)
-    return res.json(deletedProduct)
+    await productService.deleteOne(req.params.productId)
+    return res.status(204)
   } catch (e) {
     return next(e)
   }
 }
 const updateOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const updatedProduct = await productService.updateOne(
-      req.params.id,
-      req.body
-    )
+    await productService.updateOne(req.params.productId, req.body)
+    const updatedProduct = await database.AppDataSource.getRepository(
+      Product
+    ).findOneBy({ id: req.params.productId })
     return res.json(updatedProduct)
   } catch (e) {
     return next(e)

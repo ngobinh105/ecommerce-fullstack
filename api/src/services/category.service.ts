@@ -2,21 +2,23 @@ import { Category } from '../entity/Category'
 import database from '../database'
 import { NotFoundError } from '../helpers/apiError'
 
-const categoryRepository = database.AppDataSource.getRepository(Category)
-
 const getAll = async () => {
+  const categoryRepository = database.AppDataSource.getRepository(Category)
   return await categoryRepository.find()
 }
 
 const createOne = async (category: Category) => {
+  const categoryRepository = database.AppDataSource.getRepository(Category)
   return await categoryRepository.save(category)
 }
 
 const getOneById = async (id: string) => {
+  const categoryRepository = database.AppDataSource.getRepository(Category)
   return await categoryRepository.findOneBy({ id: id })
 }
 
 const updateOne = async (id: string, update: Partial<Category>) => {
+  const categoryRepository = database.AppDataSource.getRepository(Category)
   const foundCategory = await categoryRepository.findOneBy({ id: id })
   if (foundCategory) {
     return await categoryRepository.update({ id: id }, update)
@@ -26,6 +28,7 @@ const updateOne = async (id: string, update: Partial<Category>) => {
 }
 
 const deleteOne = async (id: string) => {
+  const categoryRepository = database.AppDataSource.getRepository(Category)
   const foundCategory = await categoryRepository.findOneBy({ id: id })
   if (foundCategory) {
     return await categoryRepository.delete({ id: id })

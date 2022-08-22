@@ -2,9 +2,8 @@ import { Review } from '../entity/Review'
 import database from '../database'
 import { NotFoundError } from '../helpers/apiError'
 
-const reviewRepository = database.AppDataSource.getRepository(Review)
-
 const getAllByUser = async (userId: string) => {
+  const reviewRepository = database.AppDataSource.getRepository(Review)
   return await reviewRepository
     .createQueryBuilder('review')
     .leftJoinAndSelect('review.product', 'product')
@@ -13,10 +12,12 @@ const getAllByUser = async (userId: string) => {
 }
 
 const createOne = async (review: Review) => {
+  const reviewRepository = database.AppDataSource.getRepository(Review)
   return await reviewRepository.save(review)
 }
 
 const getAllByProduct = async (productId: string) => {
+  const reviewRepository = database.AppDataSource.getRepository(Review)
   return await reviewRepository
     .createQueryBuilder('review')
     .leftJoinAndSelect('review.user', 'user')
@@ -26,6 +27,7 @@ const getAllByProduct = async (productId: string) => {
 }
 
 const updateOne = async (id: string, update: Partial<Review>) => {
+  const reviewRepository = database.AppDataSource.getRepository(Review)
   const foundReview = await reviewRepository.findOneBy({ id: id })
   if (foundReview) {
     return await reviewRepository.update({ id: id }, update)
@@ -35,6 +37,7 @@ const updateOne = async (id: string, update: Partial<Review>) => {
 }
 
 const deleteOne = async (id: string) => {
+  const reviewRepository = database.AppDataSource.getRepository(Review)
   const foundReview = await reviewRepository.findOneBy({ id: id })
   if (foundReview) {
     return await reviewRepository.delete({ id: id })

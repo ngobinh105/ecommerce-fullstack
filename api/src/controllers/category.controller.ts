@@ -42,20 +42,18 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const deletedCategory = await categoryService.deleteOne(
-      req.params.categoryId
-    )
-    return res.json(deletedCategory)
+    await categoryService.deleteOne(req.params.categoryId)
+    return res.status(204)
   } catch (e) {
     return next(e)
   }
 }
 const updateOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const updatedCategory = await categoryService.updateOne(
-      req.params.categoryId,
-      req.body
-    )
+    await categoryService.updateOne(req.params.categoryId, req.body)
+    const updatedCategory = await database.AppDataSource.getRepository(
+      Category
+    ).findOneBy({ id: req.params.categoryId })
     return res.json(updatedCategory)
   } catch (e) {
     return next(e)

@@ -45,6 +45,7 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         state,
         postalCode,
         street,
+        role,
       } = req.body
       const userAddress = database.AppDataSource.getRepository(Address).create({
         addressType,
@@ -60,6 +61,7 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         email,
         password,
         avatar,
+        role: role ? role : 'buyer',
         addresses: [userAddress],
       })
       const createdUser = await userService.createOne(newUser)
@@ -74,14 +76,17 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const deletedUser = await userService.deleteOne(req.params.userId)
-    return res.json(deletedUser)
+    return res.status(204).json(deletedUser)
   } catch (e) {
     return next(e)
   }
 }
 const updateOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const updatedUser = await userService.updateOne(req.params.userId, req.body)
+    await userService.updateOne(req.params.userId, req.body)
+    const updatedUser = await database.AppDataSource.getRepository(
+      User
+    ).findOneBy({ id: req.params.userId })
     return res.json(updatedUser)
   } catch (e) {
     return next(e)

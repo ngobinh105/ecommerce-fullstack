@@ -43,7 +43,6 @@ const verifyAdmin = async (req: Request, res: Response, next: NextFunction) => {
         process.env.JWT_SECRET ? process.env.JWT_SECRET : ''
       ) as UserDecodedPayload
       const user = JSON.parse(decoded.userJSON)
-      console.log(user.role)
       if (user.role === 'admin') {
         return next()
       } else {

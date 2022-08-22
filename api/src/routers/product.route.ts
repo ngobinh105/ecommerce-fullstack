@@ -3,6 +3,7 @@ import fileUpload from '../middlewares/multerService'
 
 import productController from '../controllers/product.controller'
 import reviewController from '../controllers/review.controller'
+import userMiddleware from '../middlewares/userMiddleware'
 
 const productRoute = Router()
 // product route
@@ -13,8 +14,16 @@ productRoute.post(
   fileUpload.array('images', 5),
   productController.createOne
 )
-productRoute.put('/:productId', productController.updateOne)
-productRoute.delete('/:productId', productController.deleteOne)
+productRoute.put(
+  '/:productId',
+  userMiddleware.verifyAdmin,
+  productController.updateOne
+)
+productRoute.delete(
+  '/:productId',
+  userMiddleware.verifyAdmin,
+  productController.deleteOne
+)
 // review route
 productRoute.get('/:productId/reviews', reviewController.getAllByProduct)
 productRoute.post('/:productId/reviews', reviewController.createOne)

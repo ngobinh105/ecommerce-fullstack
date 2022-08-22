@@ -62,8 +62,8 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const deletedReview = await reviewService.deleteOne(req.params.reviewId)
-    return res.json(deletedReview)
+    await reviewService.deleteOne(req.params.reviewId)
+    return res.status(204)
   } catch (e) {
     return next(e)
   }
