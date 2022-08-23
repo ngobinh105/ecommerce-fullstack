@@ -3,21 +3,10 @@ import app from '../app'
 import request from 'supertest'
 import { User } from '../entity/User'
 import { user1, user2, user3 } from './fixtures/user'
+import dbconfig from './utils/testdb'
 
 beforeAll(async () => {
-  await database.connect({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5433,
-    username: 'postgres',
-    password: 'admin',
-    database: 'testing',
-    entities: ['./src/entity/*'],
-    logging: false,
-    synchronize: true,
-    migrations: [],
-    subscribers: ['./src/subscribers/*'],
-  })
+  await database.connect(dbconfig)
   await database.AppDataSource.getRepository(User).save(user1)
   await database.AppDataSource.getRepository(User).save(user2)
   await database.AppDataSource.getRepository(User).save(user3)
@@ -71,7 +60,7 @@ describe('test user controller', () => {
     const user = await database.AppDataSource.getRepository(User).findOneBy({
       email: 'testing@gmail.com',
     })
-    const deleteReq = await request(app).delete(`/users/${user ? user.id : ''}`)
+    const deleteReq = await request(app).delete(`/users/${user?.id}`)
     expect(deleteReq.status).toBe(204)
   })
   test('this should update a user', async () => {
@@ -79,7 +68,7 @@ describe('test user controller', () => {
       email: 'binhngo1005@gmail.com',
     })
     const updateReq = await request(app)
-      .put(`/users/${user ? user.id : ''}`)
+      .put(`/users/${user?.id}`)
       .set('Accept', 'application/json')
       .send({
         firstName: 'John',

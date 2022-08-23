@@ -61,8 +61,8 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await productService.deleteOne(req.params.productId)
-    return res.status(204)
+    const deletedUser = await productService.deleteOne(req.params.productId)
+    return res.status(204).json(deletedUser)
   } catch (e) {
     return next(e)
   }

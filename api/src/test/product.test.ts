@@ -3,26 +3,16 @@ import app from '../app'
 import request from 'supertest'
 import { User } from '../entity/User'
 import { Product } from '../entity/Product'
-import { product1, product2, product3, category1 } from './fixtures/product'
+import { category1 } from './fixtures/product'
 import { user1 } from './fixtures/user'
 import { Category } from '../entity/Category'
+import dbconfig from './utils/testdb'
 
 beforeAll(async () => {
-  await database.connect({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5433,
-    username: 'postgres',
-    password: 'admin',
-    database: 'testing',
-    entities: ['./src/entity/*'],
-    logging: false,
-    synchronize: true,
-    migrations: [],
-    subscribers: ['./src/subscribers/*'],
-  })
+  await database.connect(dbconfig)
   await database.AppDataSource.getRepository(Category).save(category1)
   await database.AppDataSource.getRepository(User).save(user1)
+  jest.setTimeout(20000)
 })
 afterAll(async () => {
   await database.AppDataSource.createQueryBuilder()
@@ -45,9 +35,14 @@ describe('test product controller', () => {
     ).findOneBy({
       name: 'Clothes',
     })
+    const signIn = await request(app)
+      .post('/auth/login')
+      .set('Accept', 'application/json')
+      .send({ email: 'testing@gmail.com', password: 'randompassword' })
     const response = await request(app)
       .post('/products')
       .set('Content-Type', 'multipart/form-data')
+      .set('Authorization', `Bearer ${signIn.body}`)
       .field('title', 'Test product')
       .field('price', '50')
       .field('description', 'this product is for testing')
@@ -64,9 +59,7 @@ describe('test product controller', () => {
     ).findOneBy({
       title: 'Test product',
     })
-    const response = await request(app).get(
-      `/products/${product ? product.id : ''}`
-    )
+    const response = await request(app).get(`/products/${product?.id}`)
     expect(response.status).toBe(200)
     expect(response.body.title).toBe(product?.title)
   })
@@ -82,7 +75,7 @@ describe('test product controller', () => {
       title: 'Test product',
     })
     const updateProduct = await request(app)
-      .put(`/products/${product ? product.id : ''}`)
+      .put(`/products/${product?.id}`)
       .set('Authorization', `Bearer ${signIn.body}`)
       .set('Accept', 'application/json')
       .send({ stock: '200', price: '20', description: 'another test desc' })
@@ -100,9 +93,8 @@ describe('test product controller', () => {
       title: 'Test product',
     })
     const deleteReq = await request(app)
-      .delete(`/products/${product ? product.id : ''}`)
+      .delete(`/products/${product?.id}`)
       .set('Authorization', `Bearer ${signIn.body}`)
-    console.log(deleteReq.body)
     expect(deleteReq.status).toBe(204)
   })
 })

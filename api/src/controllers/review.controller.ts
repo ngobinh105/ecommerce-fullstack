@@ -62,18 +62,18 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await reviewService.deleteOne(req.params.reviewId)
-    return res.status(204)
+    const deletedReview = await reviewService.deleteOne(req.params.reviewId)
+    return res.status(204).json(deletedReview)
   } catch (e) {
     return next(e)
   }
 }
 const updateOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const updatedReview = await reviewService.updateOne(
-      req.params.reviewId,
-      req.body
-    )
+    await reviewService.updateOne(req.params.reviewId, req.body)
+    const updatedReview = await database.AppDataSource.getRepository(
+      Review
+    ).findOneBy({ id: req.params.reviewId })
     return res.json(updatedReview)
   } catch (e) {
     return next(e)

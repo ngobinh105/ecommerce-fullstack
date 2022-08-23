@@ -12,6 +12,7 @@ productRoute.get('/:productId', productController.getOneById)
 productRoute.post(
   '',
   fileUpload.array('images', 5),
+  userMiddleware.verifyAdmin,
   productController.createOne
 )
 productRoute.put(

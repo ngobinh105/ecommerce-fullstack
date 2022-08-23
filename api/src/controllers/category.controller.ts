@@ -42,8 +42,8 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
 }
 const deleteOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await categoryService.deleteOne(req.params.categoryId)
-    return res.status(204)
+    const deletedOne = await categoryService.deleteOne(req.params.categoryId)
+    return res.status(204).json(deletedOne)
   } catch (e) {
     return next(e)
   }
