@@ -26,4 +26,6 @@ class CustomDataSource {
   }
 }
 
-export default new CustomDataSource()
+const database = new CustomDataSource()
+
+export default database
