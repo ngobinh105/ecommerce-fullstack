@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
 import fs from 'fs'
 
-import categoryService from '../services/category.service'
-import database from '../database'
-import { BadRequestError, NotFoundError } from '../helpers/apiError'
-import { Image } from '../entity/Image'
-import { Category } from '../entity/Category'
+import categoryService from '../services/category.service.js'
+import database from '../database.js'
+import { BadRequestError, NotFoundError } from '../helpers/apiError.js'
+import { Image } from '../entity/Image.js'
+import { Category } from '../entity/Category.js'
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {

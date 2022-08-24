@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express'
 
-import { Image } from '../entity/Image'
-import database from '../database'
-import { NotFoundError } from '../helpers/apiError'
+import { Image } from '../entity/Image.js'
+import database from '../database.js'
+import { NotFoundError } from '../helpers/apiError.js'
 
 const imageRoute = Router()
 

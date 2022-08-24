@@ -1,12 +1,36 @@
-import app from './app'
-import database from './database'
+import app from './app.js'
+import database from './database.js'
+import dotenv from 'dotenv'
 
-database
-  .init()
-  .then(() => {
-    console.log('database is successfully initialized')
-    app.listen(app.get('port'), () => {
-      console.log('server is listening at port', app.get('port'))
+dotenv.config({ path: '.env' })
+if (process.env.NODE_ENV === 'production') {
+  database
+    .connect({
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      entities: ['./dist/entity/*'],
+      logging: false,
+      synchronize: true,
+      migrations: [],
+      subscribers: ['./dist/subscribers/*'],
+      ssl: {
+        rejectUnauthorized: false,
+      },
     })
-  })
-  .catch((e) => console.log(e))
+    .then(() => {
+      console.log('database is successfully initialized')
+      app.listen(app.get('port'), () => {
+        console.log('server is listening at port', app.get('port'))
+      })
+    })
+} else {
+  database
+    .init()
+    .then(() => {
+      console.log('database is successfully initialized')
+      app.listen(app.get('port'), () => {
+        console.log('server is listening at port', app.get('port'))
+      })
+    })
+    .catch((e) => console.log(e))
+}

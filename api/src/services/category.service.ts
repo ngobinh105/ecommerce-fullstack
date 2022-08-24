@@ -1,6 +1,6 @@
-import { Category } from '../entity/Category'
-import database from '../database'
-import { NotFoundError } from '../helpers/apiError'
+import { Category } from '../entity/Category.js'
+import database from '../database.js'
+import { NotFoundError } from '../helpers/apiError.js'
 
 const getAll = async () => {
   const categoryRepository = database.AppDataSource.getRepository(Category)

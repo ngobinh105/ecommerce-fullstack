@@ -1,6 +1,6 @@
-import { CartItem } from '../entity/CartItem'
-import database from '../database'
-import { NotFoundError } from '../helpers/apiError'
+import { CartItem } from '../entity/CartItem.js'
+import database from '../database.js'
+import { NotFoundError } from '../helpers/apiError.js'
 
 const getAllByUser = async (userId: string) => {
   const cartItemRepository = database.AppDataSource.getRepository(CartItem)

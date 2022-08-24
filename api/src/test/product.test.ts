@@ -1,12 +1,12 @@
-import database from '../database'
-import app from '../app'
+import database from '../database.js'
+import app from '../app.js'
 import request from 'supertest'
-import { User } from '../entity/User'
-import { Product } from '../entity/Product'
-import { category1 } from './fixtures/product'
-import { user1 } from './fixtures/user'
-import { Category } from '../entity/Category'
-import dbconfig from './utils/testdb'
+import { User } from '../entity/User.js'
+import { Product } from '../entity/Product.js'
+import { category1 } from './fixtures/product.js'
+import { user1 } from './fixtures/user.js'
+import { Category } from '../entity/Category.js'
+import dbconfig from './utils/testdb.js'
 
 beforeAll(async () => {
   await database.connect(dbconfig)

@@ -1,9 +1,9 @@
-import database from '../database'
-import app from '../app'
+import database from '../database.js'
+import app from '../app.js'
 import request from 'supertest'
-import { User } from '../entity/User'
-import { user1, user2, user3 } from './fixtures/user'
-import dbconfig from './utils/testdb'
+import { User } from '../entity/User.js'
+import { user1, user2, user3 } from './fixtures/user.js'
+import dbconfig from './utils/testdb.js'
 
 beforeAll(async () => {
   await database.connect(dbconfig)

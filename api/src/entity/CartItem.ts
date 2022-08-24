@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 
-import { BaseEntityCustom } from './BaseEntityCustom'
-import { Product } from './Product'
-import { User } from './User'
+import { BaseEntityCustom } from './BaseEntityCustom.js'
+import { Product } from './Product.js'
+import { User } from './User.js'
 
 @Entity()
 export class CartItem extends BaseEntityCustom {
@@ -14,9 +14,9 @@ export class CartItem extends BaseEntityCustom {
     onDelete: 'SET NULL',
   })
   @JoinColumn()
-  product: Product
+  product: Product | null
 
   @ManyToOne(() => User, (user) => user.cartItems)
   @JoinColumn()
-  user: User
+  user: User | null
 }

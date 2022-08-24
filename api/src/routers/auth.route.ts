@@ -2,9 +2,9 @@ import { NextFunction, Router, Request, Response } from 'express'
 import passport from 'passport'
 import dotenv from 'dotenv'
 
-import userController from '../controllers/user.controller'
-import userMiddleware from '../middlewares/userMiddleware'
-import { UnauthorizedError } from '../helpers/apiError'
+import userController from '../controllers/user.controller.js'
+import userMiddleware from '../middlewares/userMiddleware.js'
+import { UnauthorizedError } from '../helpers/apiError.js'
 
 dotenv.config({ path: '.env' })
 const authRoute = Router()

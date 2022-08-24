@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import fileUpload from '../middlewares/multerService'
+import fileUpload from '../middlewares/multerService.js'
 
-import categoryController from '../controllers/category.controller'
-import userMiddleware from '../middlewares/userMiddleware'
+import categoryController from '../controllers/category.controller.js'
+import userMiddleware from '../middlewares/userMiddleware.js'
 
 const categoryRoute = Router()
 

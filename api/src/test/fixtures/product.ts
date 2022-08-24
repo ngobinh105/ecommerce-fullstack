@@ -1,5 +1,5 @@
-import { Product } from '../../entity/Product'
-import { Category } from '../../entity/Category'
+import { Product } from '../../entity/Product.js'
+import { Category } from '../../entity/Category.js'
 
 export const category1 = new Category()
 category1.name = 'Clothes'

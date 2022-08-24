@@ -3,13 +3,13 @@ import fs from 'fs'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
-import { Image } from '../entity/Image'
-import database from '../database'
-import userService from '../services/user.service'
-import { NotFoundError, UnauthorizedError } from '../helpers/apiError'
-import { User } from '../entity/User'
-import { Address } from '../entity/Address'
-import { UserDecodedPayload } from '../types/token'
+import { Image } from '../entity/Image.js'
+import database from '../database.js'
+import userService from '../services/user.service.js'
+import { NotFoundError, UnauthorizedError } from '../helpers/apiError.js'
+import { User } from '../entity/User.js'
+import { Address } from '../entity/Address.js'
+import { UserDecodedPayload } from '../types/token.js'
 
 dotenv.config({ path: '.env' })
 

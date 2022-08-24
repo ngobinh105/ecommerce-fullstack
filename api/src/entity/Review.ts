@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne } from 'typeorm'
-import { BaseEntityCustom } from './BaseEntityCustom'
-import { User } from './User'
-import { Product } from './Product'
+import { BaseEntityCustom } from './BaseEntityCustom.js'
+import { User } from './User.js'
+import { Product } from './Product.js'
 
 @Entity()
 export class Review extends BaseEntityCustom {
@@ -16,10 +16,10 @@ export class Review extends BaseEntityCustom {
   @ManyToOne(() => User, (user) => user.reviews, {
     onDelete: 'CASCADE',
   })
-  user: User
+  user: User | null
 
   @ManyToOne(() => Product, (product) => product.reviews, {
     onDelete: 'CASCADE',
   })
-  product: Product
+  product: Product | null
 }

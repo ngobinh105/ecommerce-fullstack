@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
 
-import reviewService from '../services/review.service'
-import { Review } from '../entity/Review'
-import database from '../database'
-import { User } from '../entity/User'
-import { Product } from '../entity/Product'
-import { BadRequestError } from '../helpers/apiError'
+import reviewService from '../services/review.service.js'
+import { Review } from '../entity/Review.js'
+import database from '../database.js'
+import { User } from '../entity/User.js'
+import { Product } from '../entity/Product.js'
+import { BadRequestError } from '../helpers/apiError.js'
 
 const getAllByUser = async (
   req: Request,
