@@ -1,14 +1,13 @@
 import React, { useContext } from 'react'
 import { Box, useTheme, IconButton } from '@mui/material'
 import { Link } from 'react-router-dom'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
 
 import { useAppSelector } from '../hooks/appHooks'
 import CartModal from './CartModal'
 import SignInModal from './SignInModal'
 import UserMenu from './UserMenu'
-
-import LightModeIcon from '@mui/icons-material/LightMode'
-import DarkModeIcon from '@mui/icons-material/DarkMode'
 import ThemeContext from '../theme/ThemeContext'
 
 const NavBar = () => {

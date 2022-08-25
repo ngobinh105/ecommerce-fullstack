@@ -7,13 +7,11 @@ import {
   InputLabel,
   Input,
 } from '@mui/material'
-
 import React, { useState } from 'react'
+import axios from '../axios/axios'
 
 import { useAppDispatch } from '../hooks/appHooks'
-
 import { userLogin } from '../redux/reducers/userReducer'
-
 import LoginButton from './LoginButton'
 
 const SignInModal = () => {

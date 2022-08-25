@@ -13,7 +13,7 @@ export const googleStrategy = new Strategy(
     clientSecret: process.env.GOOGLE_CLIENT_SECRET
       ? process.env.GOOGLE_CLIENT_SECRET
       : '',
-    callbackURL: '/auth/google/callback',
+    callbackURL: 'api/v1/auth/google/callback',
   },
   async function (accessToken, refreshToken, profile, cb) {
     const email = profile.emails ? profile.emails[0].value : ''

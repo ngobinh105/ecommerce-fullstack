@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
-
 import { Avatar, Menu, MenuItem, IconButton } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { googleLogout } from '@react-oauth/google'
 
 import { useAppDispatch, useAppSelector } from '../hooks/appHooks'
-
-import { useNavigate } from 'react-router-dom'
-
 import { clearUser } from '../redux/reducers/userReducer'
-import { googleLogout } from '@react-oauth/google'
 
 const UserMenu = () => {
   let navigate = useNavigate()

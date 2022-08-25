@@ -58,7 +58,7 @@ const Home = () => {
                   backgroundSize: 'cover',
                   backgroundRepeat: 'no-repeat',
                 }}
-                onClick={() => navigate(`products/categories/${item.id}`)}
+                onClick={() => navigate(`categories/${item.id}`)}
               >
                 <Typography variant='h4' sx={{ padding: '2em' }}>
                   {item.name}

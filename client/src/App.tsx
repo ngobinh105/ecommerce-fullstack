@@ -7,7 +7,7 @@ import NavBar from './components/NavBar'
 import Profile from './pages/Profile'
 import SingleProduct from './pages/SingleProduct'
 import { useAppDispatch } from './hooks/appHooks'
-import { fetchAllUsers, loginByToken } from './redux/reducers/userReducer'
+import { loginByToken } from './redux/reducers/userReducer'
 
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { createTheme, ThemeProvider, Box } from '@mui/material'
@@ -78,6 +78,9 @@ function App() {
                 <Route path='products'>
                   <Route path='' element={<Product />}></Route>
                   <Route path=':productId' element={<SingleProduct />}></Route>
+                </Route>
+                <Route path='categories'>
+                  <Route path=':categoryId' element={<Product />}></Route>
                 </Route>
                 <Route path='user' element={<Profile />}></Route>
               </Routes>

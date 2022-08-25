@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -32,8 +32,8 @@ import {
 } from '../redux/reducers/productReducer'
 
 const Products = () => {
+  const { categoryId } = useParams()
   let navigate = useNavigate()
-
   const dispatch = useAppDispatch()
 
   const products = useAppSelector((state) => state.productReducer.productList)
@@ -46,7 +46,6 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [productsPerPage, setProductsPerPage] = useState(15)
   const [searchByProduct, setSearchByProduct] = useState(true)
-  const [categoryId, setCategoryId] = useState<string>('')
 
   const totalQuantity = products.length
   const indexOfLastProduct = currentPage * productsPerPage
@@ -55,18 +54,13 @@ const Products = () => {
     indexOfFirstProduct,
     indexOfLastProduct
   )
-  const enableSearchByCategory = (id: string) => {
-    setCategoryId(id)
-    setSearchByProduct(!searchByProduct)
-    setLoading(!loading)
-  }
 
   useEffect(() => {
-    if (searchByProduct) {
+    if (categoryId) {
+      dispatch(fetchProductsByCategory(categoryId))
+    } else {
       dispatch(fetchProducts())
       dispatch(fetchAllCategories())
-    } else {
-      dispatch(fetchProductsByCategory(categoryId))
     }
   }, [loading])
 
@@ -91,7 +85,7 @@ const Products = () => {
               <ListItemButton
                 key={category.id}
                 sx={{ paddingTop: '1.5em', paddingBottom: '1.5em' }}
-                onClick={() => enableSearchByCategory(category.id)}
+                onClick={() => navigate(`/categories/${category.id}`)}
               >
                 <ListItemText
                   primary={`${category.name} (${

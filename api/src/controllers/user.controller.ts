@@ -95,7 +95,24 @@ const updateOne = async (req: Request, res: Response, next: NextFunction) => {
     return next(e)
   }
 }
-
+const getOne = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const foundUser = await userService.getOne(req.body.email)
+    if (foundUser) {
+      const userJSON = JSON.stringify(foundUser)
+      const token = jwt.sign(
+        { userJSON },
+        process.env.JWT_SECRET ? process.env.JWT_SECRET : '',
+        { expiresIn: '1d' }
+      )
+      res.json(token)
+    } else {
+      throw new NotFoundError('User not found')
+    }
+  } catch (e) {
+    return next(e)
+  }
+}
 const userLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = req.user
@@ -140,4 +157,5 @@ export default {
   updateOne,
   userLogin,
   verifyUser,
+  getOne,
 }

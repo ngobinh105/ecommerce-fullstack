@@ -32,9 +32,15 @@ const deleteOne = async (id: string) => {
   }
 }
 
+const getOne = async (email: string) => {
+  const userRepository = database.AppDataSource.getRepository(User)
+  return await userRepository.findOneBy({ email })
+}
+
 export default {
   getAll,
   updateOne,
   deleteOne,
   createOne,
+  getOne,
 }
