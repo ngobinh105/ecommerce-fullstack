@@ -40,11 +40,11 @@ app.use(passport.session())
 passport.use(googleStrategy)
 
 // Set up routers
-app.use('/users', userRoute)
-app.use('/images', imageRoute)
-app.use('/products', productRoute)
-app.use('/categories', categoryRoute)
-app.use('/auth', authRoute)
+app.use('/api/v1/users', userRoute)
+app.use('/api/v1/images', imageRoute)
+app.use('/api/v1/products', productRoute)
+app.use('/api/v1/categories', categoryRoute)
+app.use('/api/v1/auth', authRoute)
 // Custom API error handler
 app.use(apiErrorHandler)
 
