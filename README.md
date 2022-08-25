@@ -1,32 +1,66 @@
-# Fullstack-Typescript-Project
 
-You can follow the same topics as your backend project. It is also possible to switch the topic
+# Binh Ecommerce Website - Full Stack Project
 
-## Prerequisites
+The project is aiming to create an Ecommerce website which are user-friendly, minimalist web design. Support all the functions that are required in the normal e-commerce website.
 
-1. Install mongodb or use MongoDB Atlas (cloud version) or:
-2. Install postgresql or use heroku (or any cloud-host psql database)
-2. Install nodejs (if you don't have it already)
 
-## Setting Up for `API folder`
+## Installation
 
-1. Create a `.env` file in the root directory and copy the content from `.env.example`
+Clone the project:
+```bash
+  git clone https://github.com/ngobinh105/fs11-fullstack.git
+```
+Install node module for api and client folder: 
+```bash
+  cd api
+  npm install
 
-2. Make sure mongodb is running (if you are using local MongoDB)
-3. Install dependencies: `yarn`
-4. Use this command for development mode: `yarn run start:dev`
-5. If you need to customize your env, take a look at `secrets.ts` file
+  cd client
+  npm install
+```
+Run development on api backend:
+```bash
+  npm run start:dev
+```
+Run development on client frontend:
+```bash
+  npm run start
+```
+## Running Tests
 
-## Requirements
+To run tests, run the following command
 
-Below are the steps that you need to finish in order to finish this module
+```bash
+  npm run test
+```
 
-1. Explore the code base of the api folder, start with `server.ts` and `app.ts`
-2. Client folder is for the react frontend. Start with `api` first before moving on to `client`
-3. Create all the schema for your ERD
-4. Create CRUD endpoints for all the schema
-5. Separate the routers and controller, controller goes into the controller folders. Controllers only handles request and response, and will call service to process business logics.
-6. Create more controller for your app if needed. Eg: borrow books, add product to order
-7. For business logic like saving data to database, filtering, searching or updating, these are services and goes into services folder
-8. Add authentication middleware using passport, google and jwt strategy
-9. Add tests for your controllers and services. Remember to create the jwt token for your tests, because if your controller is protected, then the test should send the token also
+
+## Demo
+
+- Backend: [here](https://safe-oasis-02926.herokuapp.com)
+- Frontend: [here](https://binh-ecommerce-app.netlify.app/)
+
+## Tech Stack
+
+**Client:** React, Redux, Material UI, SCSS
+
+**Server:** Node, Express, TypeORM, PostgreSQL
+
+
+## Features
+
+- Light/dark mode toggle
+- User login / Google Authentication
+- Add Items To Cart
+
+
+## Authors
+
+- [@ngobinh105](https://github.com/ngobinh105)
+
+
+## License
+
+
+Copyright @2022: [@ngobinh105](https://github.com/ngobinh105)
+
