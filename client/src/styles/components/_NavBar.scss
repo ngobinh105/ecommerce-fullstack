@@ -1,0 +1,31 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+a {
+  text-decoration: none;
+  padding: 1em;
+}
+a:hover {
+  color: darken($color: rgb(202, 186, 186), $amount: 10%);
+}
+a:active {
+  text-decoration: underline;
+}
+
+.navbar--righticons {
+  display: flex;
+  align-items: center;
+  margin-right: 1em;
+  & > * {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}
+
+.navbar--signedinicons {
+  display: flex;
+}

@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import fileUpload from '../middlewares/multerService.js'
 
-import userController from '../controllers/user.controller.js'
-import cartController from '../controllers/cart.controller.js'
-import reviewController from '../controllers/review.controller.js'
-import userMiddleware from '../middlewares/userMiddleware.js'
+import fileUpload from '../middlewares/multerService'
+import userController from '../controllers/user.controller'
+import cartController from '../controllers/cart.controller'
+import reviewController from '../controllers/review.controller'
+import userMiddleware from '../middlewares/userMiddleware'
 
 const userRoute = Router()
 // user route

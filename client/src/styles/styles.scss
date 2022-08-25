@@ -1,0 +1,32 @@
+@use 'pages/Products';
+@use 'pages/SingleProduct';
+@use 'pages/_Profile.scss';
+@use 'pages/_Home.scss';
+@use 'components/CartModal';
+@use 'components/SignInModal';
+@use 'components/NavBar';
+
+@use 'variables/fonts';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: fonts.$body-font;
+  font-weight: normal;
+  min-width: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: fonts.$header-font;
+  font-weight: normal;
+}
+
+button {
+  font-family: fonts.$button-font;
+  font-weight: bold;
+}

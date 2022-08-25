@@ -5,18 +5,21 @@ import passport from 'passport'
 import session from 'express-session'
 import cors from 'cors'
 
-import apiErrorHandler from './middlewares/apiErrorHandler.js'
-import userRoute from './routers/user.route.js'
-import imageRoute from './routers/image.route.js'
-import productRoute from './routers/product.route.js'
-import categoryRoute from './routers/category.route.js'
-import authRoute from './routers/auth.route.js'
+import apiErrorHandler from './middlewares/apiErrorHandler'
+import userRoute from './routers/user.route'
+import imageRoute from './routers/image.route'
+import productRoute from './routers/product.route'
+import categoryRoute from './routers/category.route'
+import authRoute from './routers/auth.route'
 
-import { googleStrategy } from './config/passport.js'
+import { googleStrategy } from './config/passport'
 
 dotenv.config({ path: '.env' })
 const app = express()
-
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200,
+}
 // Express configuration
 app.set('port', process.env.PORT || 80)
 
@@ -24,7 +27,7 @@ app.set('port', process.env.PORT || 80)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.text())
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(
   session({
     secret: 'secret',

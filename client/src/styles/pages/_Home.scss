@@ -1,0 +1,69 @@
+.home__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.first__content {
+  background-image: url('https://cdn.shopify.com/s/files/1/1024/1659/articles/Health_and_Wellness_Marketing_Ecommerce_Report_on_Personal_Care_Industry_Trends_Strategies_1200x.jpg?v=1588276653');
+  height: 1000px;
+  width: 100%;
+  margin-top: 2em;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.first__content--card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  transform: translateX(50%);
+  & > * {
+    padding: 1em 0 0em 0;
+  }
+  & > button {
+    margin-top: 2em;
+  }
+}
+
+.second__content {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(50%);
+  padding-bottom: 4em;
+}
+
+.category__card {
+  &:hover {
+    cursor: pointer;
+    filter: brightness(90%);
+  }
+}
+
+.home__footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.footer__right {
+  display: flex;
+  align-items: center;
+  & > p {
+    padding: 2em;
+  }
+  & p:hover {
+    cursor: pointer;
+    color: darken($color: rgb(202, 186, 186), $amount: 10%);
+  }
+  & > button {
+    padding: 1em;
+  }
+  & > button:hover {
+    color: darken($color: rgb(202, 186, 186), $amount: 10%);
+  }
+}

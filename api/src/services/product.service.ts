@@ -1,6 +1,6 @@
-import { Product } from '../entity/Product.js'
-import database from '../database.js'
-import { NotFoundError } from '../helpers/apiError.js'
+import { Product } from '../entity/Product'
+import database from '../database'
+import { NotFoundError } from '../helpers/apiError'
 
 const getAll = async () => {
   const productRepository = database.AppDataSource.getRepository(Product)

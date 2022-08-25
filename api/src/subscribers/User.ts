@@ -1,4 +1,4 @@
-import { User } from '../entity/User.js'
+import { User } from '../entity/User'
 
 import {
   EventSubscriber,

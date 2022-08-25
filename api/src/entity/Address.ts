@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne } from 'typeorm'
 
-import { BaseEntityCustom } from './BaseEntityCustom.js'
-import { User } from './User.js'
+import { BaseEntityCustom } from './BaseEntityCustom'
+import { User } from './User'
 
 @Entity()
 export class Address extends BaseEntityCustom {
@@ -24,5 +24,5 @@ export class Address extends BaseEntityCustom {
   postalCode: string
 
   @ManyToOne(() => User, (user) => user.addresses, { onDelete: 'SET NULL' })
-  user: User | null
+  user: User
 }

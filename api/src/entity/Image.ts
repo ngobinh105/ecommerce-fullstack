@@ -1,6 +1,6 @@
 import { Entity, Column } from 'typeorm'
 
-import { BaseEntityCustom } from './BaseEntityCustom.js'
+import { BaseEntityCustom } from './BaseEntityCustom'
 
 @Entity()
 export class Image extends BaseEntityCustom {

@@ -3,16 +3,19 @@ import fs from 'fs'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
-import { Image } from '../entity/Image.js'
-import database from '../database.js'
-import userService from '../services/user.service.js'
-import { NotFoundError, UnauthorizedError } from '../helpers/apiError.js'
-import { User } from '../entity/User.js'
-import { Address } from '../entity/Address.js'
-import { UserDecodedPayload } from '../types/token.js'
+import { Image } from '../entity/Image'
+import database from '../database'
+import userService from '../services/user.service'
+import { NotFoundError, UnauthorizedError } from '../helpers/apiError'
+import { User } from '../entity/User'
+import { Address } from '../entity/Address'
+import { UserDecodedPayload } from '../types/token'
 
 dotenv.config({ path: '.env' })
-
+const URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.DEPLOY_URL
+    : process.env.LOCAL_URL
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await userService.getAll()
@@ -29,10 +32,10 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
       const checkImage = await imageRepository.findOneBy({ imageData: data })
       let avatar
       if (checkImage) {
-        avatar = `http://localhost:5000/images/${checkImage.id}`
+        avatar = `${URL}/images/${checkImage.id}`
       } else {
         const image = await imageRepository.save({ imageData: data })
-        avatar = `http://localhost:5000/images/${image.id}`
+        avatar = `${URL}/images/${image.id}`
       }
       const {
         firstName,

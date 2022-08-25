@@ -1,13 +1,19 @@
 import { Request, Response, NextFunction } from 'express'
 import fs from 'fs'
+import dotenv from 'dotenv'
 
-import productService from '../services/product.service.js'
-import database from '../database.js'
-import { NotFoundError } from '../helpers/apiError.js'
-import { Image } from '../entity/Image.js'
-import { Product } from '../entity/Product.js'
-import { Category } from '../entity/Category.js'
+import productService from '../services/product.service'
+import database from '../database'
+import { NotFoundError } from '../helpers/apiError'
+import { Image } from '../entity/Image'
+import { Product } from '../entity/Product'
+import { Category } from '../entity/Category'
 
+dotenv.config({ path: '.env' })
+const URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.DEPLOY_URL
+    : process.env.LOCAL_URL
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const products = await productService.getAll()
@@ -28,10 +34,10 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
             imageData: imageData,
           })
           if (checkImage) {
-            return `http://localhost:5000/images/${checkImage.id}`
+            return `${URL}/images/${checkImage.id}`
           } else {
             const image = await imageRepository.save({ imageData: imageData })
-            return `http://localhost:5000/images/${image.id}`
+            return `${URL}/images/${image.id}`
           }
         })
       )

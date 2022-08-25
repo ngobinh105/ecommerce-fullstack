@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
 
-import cartService from '../services/cart.service.js'
-import { CartItem } from '../entity/CartItem.js'
-import { User } from '../entity/User.js'
-import { Product } from '../entity/Product.js'
-import database from '../database.js'
-import { NotFoundError } from '../helpers/apiError.js'
+import cartService from '../services/cart.service'
+import { CartItem } from '../entity/CartItem'
+import { User } from '../entity/User'
+import { Product } from '../entity/Product'
+import database from '../database'
+import { NotFoundError } from '../helpers/apiError'
 
 const getAllByUser = async (
   req: Request,

@@ -1,5 +1,5 @@
-import app from './app.js'
-import database from './database.js'
+import app from './app'
+import database from './database'
 import dotenv from 'dotenv'
 
 dotenv.config({ path: '.env' })

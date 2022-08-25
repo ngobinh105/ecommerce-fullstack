@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm'
-import { BaseEntityCustom } from './BaseEntityCustom.js'
-import { Product } from './Product.js'
+import { BaseEntityCustom } from './BaseEntityCustom'
+import { Product } from './Product'
 
 @Entity()
 export class Category extends BaseEntityCustom {
@@ -13,5 +13,5 @@ export class Category extends BaseEntityCustom {
   @OneToMany(() => Product, (product) => product.category, {
     onDelete: 'CASCADE',
   })
-  products: Product[] | null
+  products: Product[]
 }

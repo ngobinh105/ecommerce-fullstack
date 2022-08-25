@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express'
 
-import { Image } from '../entity/Image.js'
-import database from '../database.js'
-import { NotFoundError } from '../helpers/apiError.js'
+import { Image } from '../entity/Image'
+import database from '../database'
+import { NotFoundError } from '../helpers/apiError'
 
 const imageRoute = Router()
 
@@ -12,7 +12,8 @@ imageRoute.get('/:imageId', async (req: Request, res: Response) => {
   try {
     const { imageId } = req.params
     const image = await imageRepository.findOneBy({ id: imageId })
-    res.end(image?.imageData, 'binary')
+    console.log('image', image)
+    res.send(Buffer.from(image ? image.imageData : ''))
   } catch (e) {
     throw new NotFoundError()
   }

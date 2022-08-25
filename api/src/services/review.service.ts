@@ -1,6 +1,6 @@
-import { Review } from '../entity/Review.js'
-import database from '../database.js'
-import { NotFoundError } from '../helpers/apiError.js'
+import { Review } from '../entity/Review'
+import database from '../database'
+import { NotFoundError } from '../helpers/apiError'
 
 const getAllByUser = async (userId: string) => {
   const reviewRepository = database.AppDataSource.getRepository(Review)

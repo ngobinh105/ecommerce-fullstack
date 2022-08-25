@@ -1,0 +1,40 @@
+.container {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: row;
+}
+
+.product__container__pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+.product__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 6;
+  padding: 1em;
+  margin-top: 0;
+}
+.category__container {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+}
+
+.product__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  img:hover {
+    cursor: pointer;
+    opacity: 80%;
+  }
+  & > a {
+    text-decoration: none;
+  }
+}

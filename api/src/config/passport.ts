@@ -2,9 +2,9 @@ import passport from 'passport'
 import { Strategy } from 'passport-google-oauth20'
 import dotenv from 'dotenv'
 
-import database from '../database.js'
-import { User } from '../entity/User.js'
-import userService from '../services/user.service.js'
+import database from '../database'
+import { User } from '../entity/User'
+import userService from '../services/user.service'
 
 dotenv.config({ path: '.env' })
 export const googleStrategy = new Strategy(

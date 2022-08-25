@@ -2,10 +2,10 @@ import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
-import { User } from '../entity/User.js'
-import database from '../database.js'
-import { NotFoundError, UnauthorizedError } from '../helpers/apiError.js'
-import { UserDecodedPayload } from 'token.js'
+import { User } from '../entity/User'
+import database from '../database'
+import { NotFoundError, UnauthorizedError } from '../helpers/apiError'
+import { UserDecodedPayload } from 'token'
 
 dotenv.config({ path: '.env' })
 
