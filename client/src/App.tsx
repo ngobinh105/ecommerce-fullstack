@@ -79,9 +79,6 @@ function App() {
                 <Route path='products'>
                   <Route path='' element={<Product />}></Route>
                   <Route path=':productId' element={<SingleProduct />}></Route>
-                  <Route path='categories'>
-                    <Route path=':categoryId' element={<Category />}></Route>
-                  </Route>
                 </Route>
                 <Route path='user' element={<Profile />}></Route>
               </Routes>

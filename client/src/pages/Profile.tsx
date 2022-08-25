@@ -18,11 +18,11 @@ const Profile = () => {
       <Box className='profile__container' sx={{ bgcolor: 'primary.main' }}>
         <Box className='profile__card--header'>
           <Avatar
-            alt={user?.name}
+            alt={user?.firstName}
             src={user?.avatar}
             sx={{ width: '100px', height: '100px' }}
           />
-          <Typography variant='h4'>{user?.name}</Typography>
+          <Typography variant='h4'>{user?.firstName}</Typography>
         </Box>
 
         <form action='submit' className='profile__card--form'>
@@ -30,7 +30,7 @@ const Profile = () => {
             <TextField
               label='Name'
               variant='standard'
-              defaultValue={user?.name}
+              defaultValue={user?.firstName}
               required
             />
           </Box>

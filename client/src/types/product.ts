@@ -4,6 +4,8 @@ export interface Product {
   price: number
   description: string
   category: Categories
+  stock: number
+  discount?: number
   images: string[]
 }
 
@@ -16,11 +18,6 @@ export interface Categories {
 export interface TypedUpdateProduct {
   id: number
   update: Partial<Product>
-}
-
-export interface Pagination {
-  offset: number
-  limit: number
 }
 
 export interface ProductReducerType {
@@ -37,6 +34,7 @@ export interface NewProduct {
   title: string
   price: number
   description: string
+  stock: number
   categoryId: number
   images: string[]
 }

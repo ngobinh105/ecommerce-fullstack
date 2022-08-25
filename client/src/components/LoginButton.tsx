@@ -27,7 +27,7 @@ const LoginButton = () => {
               credentialResponse.credential as string
             )
             const user: Partial<User> = {
-              name: response.name,
+              firstName: response.name,
               email: response.email,
               avatar: response.picture,
               password: '1234',

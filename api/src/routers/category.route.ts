@@ -8,6 +8,7 @@ const categoryRoute = Router()
 
 categoryRoute.get('', categoryController.getAll)
 categoryRoute.get('/:categoryId', categoryController.getOneById)
+categoryRoute.get('/:categoryId/products', categoryController.getAllProducts)
 categoryRoute.post(
   '',
   fileUpload.single('image'),

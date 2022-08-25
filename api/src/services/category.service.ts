@@ -36,6 +36,14 @@ const deleteOne = async (id: string) => {
     throw new NotFoundError()
   }
 }
+const getAllProducts = async (categoryId: string) => {
+  const categoryRepository = database.AppDataSource.getRepository(Category)
+  const category = await categoryRepository.findOne({
+    where: { id: categoryId },
+    relations: ['products'],
+  })
+  return category?.products
+}
 
 export default {
   getAll,
@@ -43,4 +51,5 @@ export default {
   deleteOne,
   getOneById,
   createOne,
+  getAllProducts,
 }

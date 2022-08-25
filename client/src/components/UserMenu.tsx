@@ -44,12 +44,7 @@ const UserMenu = () => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Avatar
-          alt={user?.name}
-          src={
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-MASH1cd505q-0PEQbyKAE3fs6UZoY92ScA&usqp=CAU'
-          }
-        />
+        <Avatar alt={user?.firstName} src={user?.avatar} />
       </IconButton>
       <Menu
         id='account-menu'

@@ -27,7 +27,8 @@ const wrongCredentialAcc = {
 }
 
 const newUser = {
-  name: 'Binhaa',
+  firstName: 'Binhaa',
+  lastName: 'Ngo',
   email: 'binh@gmail.com',
   password: '12345',
   avatar: 'https://api.lorem.space/image/face?w=640&h=480&r=1874',
@@ -56,13 +57,15 @@ describe('Test product reducer actions', () => {
   test('this should create a new user', async () => {
     await store.dispatch(createUser(newUser))
     const state = store.getState().userReducer
-    const addedUser = state.userList.find((item) => item.name === newUser.name)
+    const addedUser = state.userList.find(
+      (item) => item.firstName === newUser.firstName
+    )
     expect(addedUser).toBeDefined()
   })
   test('this should login and return user info', async () => {
     await store.dispatch(userLogin(testAcc))
     const state = store.getState().userReducer
-    expect(state.user?.name).toBeDefined()
+    expect(state.user?.firstName).toBeDefined()
   })
   test('this should login fail with wrong credential', async () => {
     await store.dispatch(userLogin(wrongCredentialAcc))

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from '../../axios/axios'
 import {
   NewProduct,
-  Pagination,
   Product,
   ProductReducerType,
   TypedUpdateProduct,
@@ -12,29 +12,22 @@ const initalState: ProductReducerType = {
   product: <Product>{},
 }
 
-export const fetchProducts = createAsyncThunk(
-  'fetchProducts',
-  async ({ offset, limit }: Pagination) => {
-    try {
-      const res = await fetch(
-        `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${limit}`
-      )
-      const data = await res.json()
-      return data
-    } catch (error) {
-      console.log(error)
-    }
+export const fetchProducts = createAsyncThunk('fetchProducts', async () => {
+  try {
+    const res = await axios.get('/products')
+    const data = await res.data
+    return data
+  } catch (error) {
+    console.log(error)
   }
-)
+})
 
 export const fetchSingleProduct = createAsyncThunk(
   'fetchSingleProduct',
   async (productId: number) => {
     try {
-      const res = await fetch(
-        `https://api.escuelajs.co/api/v1/products/${productId}`
-      )
-      const data = await res.json()
+      const res = await axios.get(`/products/${productId}`)
+      const data = await res.data
       return data
     } catch (error) {
       console.log(error)
@@ -46,17 +39,11 @@ export const updateProduct = createAsyncThunk(
   'updateProduct',
   async (updateProduct: TypedUpdateProduct) => {
     try {
-      const res = await fetch(
-        `https://api.escuelajs.co/api/v1/products/${updateProduct.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(updateProduct.update),
-        }
+      const res = await axios.put(
+        `/products/${updateProduct.id}`,
+        updateProduct
       )
-      const data = await res.json()
+      const data = await res.data
       return data
     } catch (error) {
       console.log(error)
@@ -68,12 +55,7 @@ export const deleteProduct = createAsyncThunk(
   'deleteProduct',
   async (productId: number) => {
     try {
-      await fetch(`https://api.escuelajs.co/api/v1/products/${productId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-type': 'application/json',
-        },
-      })
+      await axios.delete(`/products/${productId}`)
       return productId
     } catch (error) {
       console.log(error)
@@ -85,21 +67,18 @@ export const addProduct = createAsyncThunk(
   'addProduct',
   async (product: NewProduct) => {
     try {
-      const res = await fetch('https://api.escuelajs.co/api/v1/products/', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(product),
-      })
-      const data = await res.json()
+      const res = await axios.post('/products', product)
+      const data = await res.data
       return data
     } catch (error) {
       console.log(error)
     }
   }
 )
-
+export const getProductsByCategory = createAsyncThunk(
+  'getProductsByCategory',
+  async () => {}
+)
 const productSlicer = createSlice({
   name: 'product',
   initialState: initalState,

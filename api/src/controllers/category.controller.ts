@@ -75,6 +75,18 @@ const getOneById = async (req: Request, res: Response, next: NextFunction) => {
     return next(e)
   }
 }
+const getAllProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const products = await categoryService.getAllProducts(req.params.categoryId)
+    return res.json(products)
+  } catch (e) {
+    return next(e)
+  }
+}
 
 export default {
   getAll,
@@ -82,4 +94,5 @@ export default {
   deleteOne,
   updateOne,
   getOneById,
+  getAllProducts,
 }

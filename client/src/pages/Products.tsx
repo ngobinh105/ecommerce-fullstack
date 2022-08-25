@@ -44,34 +44,24 @@ const Products = () => {
   )
   const user = useAppSelector((state) => state.userReducer.user)
 
-  const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [productsPerPage, setProductsPerPage] = useState(15)
 
-  const limit = 15
-
-  const [allProducts, setAllProducts] = useState<Product[]>()
-  const [quantity, setQuantity] = useState(0)
-
-  const fetchProductsFromApi = async () => {
-    const res = await fetch('https://api.escuelajs.co/api/v1/products')
-    const data = await res.json()
-    setAllProducts(data)
-    setQuantity(data.length)
-  }
-
+  const totalQuantity = products.length
+  const indexOfLastProduct = currentPage * productsPerPage
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  )
   const changeCategory = (id: number) => {
     navigate(`categories/${id}`, { replace: true })
   }
 
   useEffect(() => {
-    dispatch(
-      fetchProducts({
-        offset: limit * (page === 1 ? 0 : page - 1),
-        limit: limit,
-      })
-    )
+    dispatch(fetchProducts())
     dispatch(fetchAllCategories())
-    fetchProductsFromApi()
   }, [loading])
 
   return (
@@ -99,8 +89,8 @@ const Products = () => {
               >
                 <ListItemText
                   primary={`${category.name} (${
-                    allProducts
-                      ? allProducts?.filter(
+                    products
+                      ? products?.filter(
                           (item) => item.category.id === category.id
                         ).length
                       : 0
@@ -113,7 +103,7 @@ const Products = () => {
       </Box>
       <Box className='product__container'>
         <Grid container spacing={2} justifyContent='center'>
-          {products.map((item) => (
+          {currentProducts.map((item) => (
             <Grid
               className='product__card'
               key={item.id}
@@ -185,12 +175,12 @@ const Products = () => {
           className='product__container__pagination'
           siblingCount={0}
           defaultPage={1}
-          page={page}
+          page={currentPage}
           onChange={(event: React.ChangeEvent<unknown>, value: number) => {
-            setPage(value)
+            setCurrentPage(value)
             setLoading(!loading)
           }}
-          count={Math.ceil(quantity / limit)}
+          count={Math.ceil(totalQuantity / productsPerPage)}
           renderItem={(item) => (
             <PaginationItem
               components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }}
