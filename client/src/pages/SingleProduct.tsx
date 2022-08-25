@@ -25,7 +25,7 @@ const SingleProduct = () => {
     dispatch(addToCart({ ...product, quantity: productQuantity }))
   }
   useEffect(() => {
-    dispatch(fetchSingleProduct(Number(productId)))
+    dispatch(fetchSingleProduct(productId ? productId : ''))
   }, [productId])
   return (
     <Box className='single__product__container'>

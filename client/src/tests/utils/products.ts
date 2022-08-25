@@ -4,6 +4,7 @@ export const products = [
     price: 10000,
     description: 'new description ',
     categoryId: 1,
+    stock: 100,
     images: [
       'https://api.lorem.space/image/fashion?w=640&h=480&r=7028',
       'https://api.lorem.space/image/fashion?w=640&h=480&r=5413',
@@ -13,6 +14,7 @@ export const products = [
   {
     title: 'Practical Cotton Gloves',
     price: 846,
+    stock: 500,
     description:
       'The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J',
     categoryId: 4,
@@ -25,6 +27,7 @@ export const products = [
   {
     title: 'Ergonomic Cotton Bacon',
     price: 515,
+    stock: 100,
     description:
       'Carbonite web goalkeeper gloves are ergonomically designed to give easy fit',
     categoryId: 4,
@@ -37,13 +40,13 @@ export const products = [
 ]
 
 export const returnedResponse = {
-  id: 2,
+  id: '2',
   title: 'Practical Cotton Gloves',
   price: 846,
   description:
     'The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J',
   category: {
-    id: 4,
+    id: '4',
     name: 'Shoes',
     image: 'https://api.lorem.space/image/shoes?w=640&h=480&r=192',
   },

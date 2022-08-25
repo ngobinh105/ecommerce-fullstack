@@ -33,10 +33,10 @@ const cartSlicer = createSlice({
         })
       }
     },
-    deleteItem(state, action: PayloadAction<number>) {
+    deleteItem(state, action: PayloadAction<string>) {
       state.cart = state.cart.filter((item) => item.id !== action.payload)
     },
-    decrement(state, action: PayloadAction<number>) {
+    decrement(state, action: PayloadAction<string>) {
       const itemIndex = state.cart.findIndex(
         (item) => item.id === action.payload
       )

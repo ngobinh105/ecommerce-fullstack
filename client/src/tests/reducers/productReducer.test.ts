@@ -24,7 +24,7 @@ const fakeAction = {
 }
 
 const updatedProduct = {
-  id: 2,
+  id: '2',
   update: {
     title: 'New Title',
     price: 200,
@@ -46,10 +46,10 @@ describe('Test product reducer actions', () => {
     expect(state.productList.length).toBe(0)
     expect(state.product).toBeNull
   })
-  test('this should fetch 10 products and save to test', async () => {
-    await store.dispatch(fetchProducts({ offset: 0, limit: 10 }))
+  test('this should fetch all products and save to test', async () => {
+    await store.dispatch(fetchProducts())
     const state = store.getState().productReducer
-    expect(state.productList.length).toBe(10)
+    expect(state.productList.length).toBeGreaterThan(1)
   })
   test('this should add a product to api', async () => {
     await store.dispatch(addProduct(products[0]))
@@ -59,18 +59,18 @@ describe('Test product reducer actions', () => {
     await store.dispatch(addProduct(products[1]))
     await store.dispatch(updateProduct(updatedProduct))
     const state = store.getState().productReducer
-    expect(state.productList.find((item) => item.id === 2)?.title).toEqual(
+    expect(state.productList.find((item) => item.id === '2')?.title).toEqual(
       'New Title'
     )
   })
   test('this should delete the product', async () => {
     await store.dispatch(addProduct(products[1]))
-    await store.dispatch(deleteProduct(2))
+    await store.dispatch(deleteProduct('2'))
     const state = store.getState().productReducer
     expect(state.productList.length).toBe(0)
   })
   test('this should fetch only a product', async () => {
-    await store.dispatch(fetchSingleProduct(4))
+    await store.dispatch(fetchSingleProduct('4'))
     const state = store.getState().productReducer
     expect(state.product).not.toBeNull
   })

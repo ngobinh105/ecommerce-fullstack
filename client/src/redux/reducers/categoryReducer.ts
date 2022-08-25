@@ -1,35 +1,32 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { CategoryReducerType } from '../../types/product'
+import axios from '../../axios/axios'
+import { CategoryReducerType, NewCategory } from '../../types/product'
 
 const initalState: CategoryReducerType = {
   categoryList: [],
-  sortedProductList: [],
 }
 
 export const fetchAllCategories = createAsyncThunk(
   'fetchAllCategories',
   async () => {
     try {
-      const res = await fetch('https://api.escuelajs.co/api/v1/categories')
-      const data = await res.json()
+      const res = await axios.get('/categories')
+      const data = await res.data
       return data
     } catch (error) {
       console.log(error)
     }
   }
 )
-
-export const fetchProductsByCategory = createAsyncThunk(
-  'fetchProductsByCategory',
-  async (categoryId: number) => {
+export const addCategory = createAsyncThunk(
+  'addCategory',
+  async (category: NewCategory) => {
     try {
-      const res = await fetch(
-        `https://api.escuelajs.co/api/v1/categories/${categoryId}/products`
-      )
-      const data = await res.json()
+      const res = await axios.post('/categories', category)
+      const data = await res.data
       return data
-    } catch (error) {
-      console.log(error)
+    } catch (e) {
+      console.log(e)
     }
   }
 )
@@ -43,8 +40,8 @@ const categorySlicer = createSlice({
       .addCase(fetchAllCategories.fulfilled, (state, action) => {
         state.categoryList = action.payload
       })
-      .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
-        state.sortedProductList = action.payload
+      .addCase(addCategory.fulfilled, (state, action) => {
+        state.categoryList.push(action.payload)
       })
   },
 })

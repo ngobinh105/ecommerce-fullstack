@@ -1,22 +1,26 @@
 export interface Product {
-  id: number
+  id: string
   title: string
   price: number
   description: string
-  category: Categories
+  category: Category
   stock: number
-  discount?: number
+  discount: number
   images: string[]
+  createdAt: string
+  updatedAt: string
 }
 
-export interface Categories {
-  id: number
+export interface Category {
+  id: string
   name: string
   image: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface TypedUpdateProduct {
-  id: number
+  id: string
   update: Partial<Product>
 }
 
@@ -26,8 +30,7 @@ export interface ProductReducerType {
 }
 
 export interface CategoryReducerType {
-  categoryList: Categories[]
-  sortedProductList: Product[]
+  categoryList: Category[]
 }
 
 export interface NewProduct {
@@ -37,4 +40,8 @@ export interface NewProduct {
   stock: number
   categoryId: number
   images: string[]
+}
+export interface NewCategory {
+  name: string
+  image: string
 }

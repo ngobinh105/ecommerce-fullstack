@@ -24,7 +24,7 @@ export const fetchProducts = createAsyncThunk('fetchProducts', async () => {
 
 export const fetchSingleProduct = createAsyncThunk(
   'fetchSingleProduct',
-  async (productId: number) => {
+  async (productId: string) => {
     try {
       const res = await axios.get(`/products/${productId}`)
       const data = await res.data
@@ -53,7 +53,7 @@ export const updateProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   'deleteProduct',
-  async (productId: number) => {
+  async (productId: string) => {
     try {
       await axios.delete(`/products/${productId}`)
       return productId
@@ -75,9 +75,17 @@ export const addProduct = createAsyncThunk(
     }
   }
 )
-export const getProductsByCategory = createAsyncThunk(
+export const fetchProductsByCategory = createAsyncThunk(
   'getProductsByCategory',
-  async () => {}
+  async (categoryId: string) => {
+    try {
+      const res = await axios.get(`/categories/${categoryId}/products`)
+      const data = await res.data
+      return data
+    } catch (e) {
+      console.log(e)
+    }
+  }
 )
 const productSlicer = createSlice({
   name: 'product',
@@ -104,6 +112,9 @@ const productSlicer = createSlice({
       })
       .addCase(addProduct.fulfilled, (state, action) => {
         state.productList.push(action.payload)
+      })
+      .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
+        state.productList = action.payload
       })
   },
 })

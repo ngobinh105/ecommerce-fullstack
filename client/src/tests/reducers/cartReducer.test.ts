@@ -15,21 +15,27 @@ const fakeAction = {
 }
 
 const testProduct = {
-  id: 4,
+  id: '4',
   title: 'Tasty Wooden Chicken',
   price: 624,
+  stock: 500,
+  discount: 0,
   description:
     'Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals',
   category: {
-    id: 3,
+    id: '3',
     name: 'Furniture',
     image: 'https://api.lorem.space/image/furniture?w=640&h=480&r=8695',
+    createdAt: '20200',
+    updatedAt: '202020',
   },
   images: [
     'https://api.lorem.space/image/furniture?w=640&h=480&r=6278',
     'https://api.lorem.space/image/furniture?w=640&h=480&r=1747',
     'https://api.lorem.space/image/furniture?w=640&h=480&r=1592',
   ],
+  createdAt: '202020',
+  updatedAt: '202020',
 }
 const testProductWithQuantity = { ...testProduct, quantity: 3 }
 const currentState: CartType = {

@@ -8,7 +8,6 @@ import Profile from './pages/Profile'
 import SingleProduct from './pages/SingleProduct'
 import { useAppDispatch } from './hooks/appHooks'
 import { fetchAllUsers, loginByToken } from './redux/reducers/userReducer'
-import Category from './pages/Category'
 
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { createTheme, ThemeProvider, Box } from '@mui/material'

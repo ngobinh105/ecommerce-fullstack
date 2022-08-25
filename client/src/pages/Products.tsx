@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-
 import { useNavigate } from 'react-router-dom'
-
-import { useAppDispatch, useAppSelector } from '../hooks/appHooks'
-
-import { deleteProduct, fetchProducts } from '../redux/reducers/productReducer'
-
+import { Link } from 'react-router-dom'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import DeleteIcon from '@mui/icons-material/Delete'
 import {
   Box,
   Grid,
@@ -24,14 +22,14 @@ import {
   IconButton,
 } from '@mui/material'
 
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import DeleteIcon from '@mui/icons-material/Delete'
-
 import { addToCart } from '../redux/reducers/cartReducer'
 import { fetchAllCategories } from '../redux/reducers/categoryReducer'
-import { Product } from '../types/product'
-import { Link } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../hooks/appHooks'
+import {
+  deleteProduct,
+  fetchProducts,
+  fetchProductsByCategory,
+} from '../redux/reducers/productReducer'
 
 const Products = () => {
   let navigate = useNavigate()
@@ -47,6 +45,8 @@ const Products = () => {
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [productsPerPage, setProductsPerPage] = useState(15)
+  const [searchByProduct, setSearchByProduct] = useState(true)
+  const [categoryId, setCategoryId] = useState<string>('')
 
   const totalQuantity = products.length
   const indexOfLastProduct = currentPage * productsPerPage
@@ -55,13 +55,19 @@ const Products = () => {
     indexOfFirstProduct,
     indexOfLastProduct
   )
-  const changeCategory = (id: number) => {
-    navigate(`categories/${id}`, { replace: true })
+  const enableSearchByCategory = (id: string) => {
+    setCategoryId(id)
+    setSearchByProduct(!searchByProduct)
+    setLoading(!loading)
   }
 
   useEffect(() => {
-    dispatch(fetchProducts())
-    dispatch(fetchAllCategories())
+    if (searchByProduct) {
+      dispatch(fetchProducts())
+      dispatch(fetchAllCategories())
+    } else {
+      dispatch(fetchProductsByCategory(categoryId))
+    }
   }, [loading])
 
   return (
@@ -85,7 +91,7 @@ const Products = () => {
               <ListItemButton
                 key={category.id}
                 sx={{ paddingTop: '1.5em', paddingBottom: '1.5em' }}
-                onClick={() => changeCategory(category.id)}
+                onClick={() => enableSearchByCategory(category.id)}
               >
                 <ListItemText
                   primary={`${category.name} (${
