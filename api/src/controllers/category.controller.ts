@@ -29,10 +29,10 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
       const checkImage = await imageRepository.findOneBy({ imageData: data })
       let image
       if (checkImage) {
-        image = `${URL}/images/${checkImage.id}`
+        image = `${URL}/api/v1/images/${checkImage.id}`
       } else {
         const savedImage = await imageRepository.save({ imageData: data })
-        image = `${URL}/images/${savedImage.id}`
+        image = `${URL}/api/v1/images/${savedImage.id}`
       }
       const newCategory = database.AppDataSource.getRepository(Category).create(
         { image, name: req.body.name }

@@ -32,10 +32,10 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
       const checkImage = await imageRepository.findOneBy({ imageData: data })
       let avatar
       if (checkImage) {
-        avatar = `${URL}/images/${checkImage.id}`
+        avatar = `${URL}/api/v1/images/${checkImage.id}`
       } else {
         const image = await imageRepository.save({ imageData: data })
-        avatar = `${URL}/images/${image.id}`
+        avatar = `${URL}/api/v1/images/${image.id}`
       }
       const {
         firstName,

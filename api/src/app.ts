@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import passport from 'passport'
 import session from 'express-session'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import userRoute from './routers/user.route'
@@ -27,12 +28,17 @@ app.set('port', process.env.PORT || 80)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.text())
+app.use(cookieParser())
 app.use(cors(corsOptions))
 app.use(
   session({
     secret: 'secret',
     resave: true,
     saveUninitialized: true,
+    cookie: {
+      secure: true,
+      maxAge: 60 * 60 * 24 * 365,
+    },
   })
 )
 app.use(passport.initialize())

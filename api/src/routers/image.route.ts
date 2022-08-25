@@ -6,16 +6,14 @@ import { NotFoundError } from '../helpers/apiError'
 
 const imageRoute = Router()
 
-const imageRepository = database.AppDataSource.getRepository(Image)
-
 imageRoute.get('/:imageId', async (req: Request, res: Response) => {
-  try {
-    const { imageId } = req.params
-    const image = await imageRepository.findOneBy({ id: imageId })
-    console.log('image', image)
-    res.send(Buffer.from(image ? image.imageData : ''))
-  } catch (e) {
-    throw new NotFoundError()
+  const { imageId } = req.params
+  const imageRepository = database.AppDataSource.getRepository(Image)
+  const image = await imageRepository.findOneBy({ id: imageId })
+  if (image) {
+    res.end(image.imageData, 'binary')
+  } else {
+    throw new NotFoundError('Image not found')
   }
 })
 

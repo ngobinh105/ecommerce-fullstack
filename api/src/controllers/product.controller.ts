@@ -34,10 +34,10 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
             imageData: imageData,
           })
           if (checkImage) {
-            return `${URL}/images/${checkImage.id}`
+            return `${URL}/api/v1/images/${checkImage.id}`
           } else {
             const image = await imageRepository.save({ imageData: imageData })
-            return `${URL}/images/${image.id}`
+            return `${URL}/api/v1/images/${image.id}`
           }
         })
       )
