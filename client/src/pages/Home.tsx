@@ -60,7 +60,10 @@ const Home = () => {
                 }}
                 onClick={() => navigate(`categories/${item.id}`)}
               >
-                <Typography variant='h4' sx={{ padding: '2em' }}>
+                <Typography
+                  variant='h4'
+                  sx={{ padding: '2em', color: 'beige' }}
+                >
                   {item.name}
                 </Typography>
               </Paper>
