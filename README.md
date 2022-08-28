@@ -43,7 +43,7 @@ To run tests, run the following command
 ## Demo
 
 - Backend: [here](https://safe-oasis-02926.herokuapp.com)
-- Frontend: [here](fs11-ecommerce-web.netlify.app/)
+- Frontend: [here](https://fs11-ecommerce-web.netlify.app/)
 
 ## Tech Stack
 
@@ -54,8 +54,9 @@ To run tests, run the following command
 ## Features
 
 - Light/dark mode toggle
-- User login / Google Authentication
+- User login / Google Authentication / Signup
 - Add Items To Cart
+- Basic Routing
 
 ## Authors
 
