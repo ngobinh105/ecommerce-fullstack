@@ -63,6 +63,23 @@ export const createUser = createAsyncThunk(
   }
 )
 
+export const addUserByFormData = createAsyncThunk(
+  'addUserByFormData',
+  async (newUser: FormData) => {
+    try {
+      const res = await axios.post('/users', newUser, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      const data = await res.data
+      return data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+)
+
 const userSlicer = createSlice({
   name: 'user',
   initialState: initialState,
@@ -83,6 +100,9 @@ const userSlicer = createSlice({
         state.user = action.payload
       })
       .addCase(createUser.fulfilled, (state, action) => {
+        state.userList.push(action.payload)
+      })
+      .addCase(addUserByFormData.fulfilled, (state, action) => {
         state.userList.push(action.payload)
       })
   },

@@ -5,7 +5,7 @@ import { User } from './User'
 
 @Entity()
 export class Address extends BaseEntityCustom {
-  @Column({ enum: ['home', 'business', 'shipping', 'billing'] })
+  @Column({ enum: ['home', 'business', 'shipping', 'billing'], nullable: true })
   addressType: string
 
   @Column()

@@ -2,6 +2,7 @@ import React from 'react'
 import { GoogleLogin } from '@react-oauth/google'
 import jwt_decode from 'jwt-decode'
 import { Box } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '../hooks/appHooks'
 import {
@@ -12,9 +13,8 @@ import {
 import { User } from '../types/user'
 import axios from '../axios/axios'
 
-const LoginButton = () => {
+const LoginButton = ({ ...props }) => {
   const dispatch = useAppDispatch()
-
   return (
     <Box sx={{ mt: '2em' }}>
       <GoogleLogin
@@ -33,20 +33,25 @@ const LoginButton = () => {
               lastName: response.family_name,
               email: response.email,
               avatar: response.picture,
-              password: '1234',
+              password: '123456',
               role: 'buyer',
             }
             try {
               const res = await axios.post('/auth/findUser', {
-                email: user.email,
+                email: response.email,
               })
               const userToken = await res.data
               localStorage.setItem('userToken', userToken)
               dispatch(loginByToken())
+              props.handleClose()
             } catch (e) {
               dispatch(createUser(user))
-              dispatch(userLogin({ email: response.email, password: '1234' }))
-              console.log(e)
+              setTimeout(() => {
+                dispatch(
+                  userLogin({ email: response.email, password: '123456' })
+                )
+                props.handleClose()
+              }, 2500)
             }
           }
         }}

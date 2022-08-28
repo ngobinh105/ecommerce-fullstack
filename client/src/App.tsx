@@ -25,8 +25,6 @@ function App() {
   const userLogin = () => {
     if (localStorage.getItem('userToken')) {
       dispatch(loginByToken())
-    } else {
-      return undefined
     }
   }
 

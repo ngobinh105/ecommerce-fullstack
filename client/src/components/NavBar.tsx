@@ -12,6 +12,7 @@ import ThemeContext from '../theme/ThemeContext'
 
 const NavBar = () => {
   const user = useAppSelector((state) => state.userReducer.user)
+  console.log('user', user)
   const theme = useTheme()
   const colormode = useContext(ThemeContext)
   return (

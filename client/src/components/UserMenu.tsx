@@ -27,7 +27,7 @@ const UserMenu = () => {
   const signOut = () => {
     localStorage.removeItem('userToken')
     setAnchorEl(null)
-    dispatch(clearUser(undefined))
+    dispatch(clearUser({}))
     navigate('/', { replace: true })
     googleLogout()
   }

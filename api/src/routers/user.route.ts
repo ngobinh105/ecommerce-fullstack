@@ -12,6 +12,7 @@ userRoute.get('', userMiddleware.verifyAdmin, userController.getAll)
 userRoute.post('', fileUpload.single('avatar'), userController.createOne)
 userRoute.put('/:userId', userController.updateOne)
 userRoute.delete('/:userId', userController.deleteOne)
+userRoute.post('/:userId/addresses', userController.updateAddress)
 // cart route
 userRoute.get('/:userId/carts', cartController.getAllByUser)
 userRoute.post('/:userId/carts', cartController.createOne)

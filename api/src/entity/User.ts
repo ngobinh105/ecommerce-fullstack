@@ -48,7 +48,7 @@ export class User extends BaseEntityCustom {
     onDelete: 'CASCADE',
   })
   @JoinTable()
-  addresses: Address[]
+  addresses: Address[] | null
 
   @OneToMany(() => CartItem, (cartItem) => cartItem.user, {
     eager: true,

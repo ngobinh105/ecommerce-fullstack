@@ -28,3 +28,12 @@ export interface UserReducerType {
   userList: User[]
   user: User | undefined
 }
+
+export type UserFormData = {
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  avatar: string
+  passwordConfirm: string
+}

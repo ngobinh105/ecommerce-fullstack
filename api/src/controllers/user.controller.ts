@@ -37,27 +37,7 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         const image = await imageRepository.save({ imageData: data })
         avatar = `${URL}/api/v1/images/${image.id}`
       }
-      const {
-        firstName,
-        lastName,
-        email,
-        password,
-        addressType,
-        city,
-        country,
-        state,
-        postalCode,
-        street,
-        role,
-      } = req.body
-      const userAddress = database.AppDataSource.getRepository(Address).create({
-        addressType,
-        city,
-        country,
-        state,
-        postalCode,
-        street,
-      })
+      const { firstName, lastName, email, password, role } = req.body
       const newUser = database.AppDataSource.getRepository(User).create({
         firstName,
         lastName,
@@ -65,12 +45,21 @@ const createOne = async (req: Request, res: Response, next: NextFunction) => {
         password,
         avatar,
         role: role ? role : 'buyer',
-        addresses: [userAddress],
       })
       const createdUser = await userService.createOne(newUser)
       return res.status(201).json(createdUser)
     } else {
-      throw new NotFoundError()
+      const { firstName, lastName, email, password, role, avatar } = req.body
+      const newUser = database.AppDataSource.getRepository(User).create({
+        firstName,
+        lastName,
+        email,
+        password,
+        avatar,
+        role: role ? role : 'buyer',
+      })
+      const createdUser = await userService.createOne(newUser)
+      return res.status(201).json(createdUser)
     }
   } catch (e) {
     return next(e)
@@ -149,6 +138,34 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
     return next(e)
   }
 }
+const updateAddress = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { userId } = req.params
+  const user = await database.AppDataSource.getRepository(User).findOneBy({
+    id: userId,
+  })
+  if (user) {
+    const { addressType, city, country, state, postalCode, street } = req.body
+    const userAddress = database.AppDataSource.getRepository(Address).create({
+      addressType,
+      city,
+      country,
+      state,
+      postalCode,
+      street,
+    })
+    userAddress.user = user
+    const savedAddress = await database.AppDataSource.getRepository(
+      Address
+    ).save(userAddress)
+    res.status(201).json(savedAddress)
+  } else {
+    throw new NotFoundError('User not found')
+  }
+}
 
 export default {
   getAll,
@@ -158,4 +175,5 @@ export default {
   userLogin,
   verifyUser,
   getOne,
+  updateAddress,
 }

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../hooks/appHooks'
 import { fetchAllCategories } from '../redux/reducers/categoryReducer'
+import { loginByToken } from '../redux/reducers/userReducer'
 
 const Home = () => {
   let navigate = useNavigate()
